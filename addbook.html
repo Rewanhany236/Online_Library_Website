@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>Add New Book - Online Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        nav {
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .right-link {
+            float: right;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        form {
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .cancel {
+            margin-left: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="borrowed-books.html">My Borrowed Books</a>
+        <a href="addbook.html"> Add New Book</a>
+        <a href="#">Logout</a> <!-- logout fnc? -->
+    </nav>
+    <hr>
+    <h2>Add New Book</h2>
+    <form action="#" method="post">
+
+        <lable for="book-name">Book Name:</lable>
+        <input type="text" id="book-name" name="book-name" required>
+
+        <lable for="Author"> Author:</lable>
+        <input type="text" id="Author" name="Author" required>
+
+        <lable for="Category"> Category:</label>
+        <input type="text" id="Category" name="Category" required>
+
+        <lable for="Description"> Description: </label>
+        <input type="text" id="Description" name="Description" required>
+
+        <button type="sumbit"> Add Book </button>
+        <a href="books.html" class="cancel">cancel</a>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        nav {
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .right-link {
+            float: right;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        form {
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+    </style>
+</head>
+
+</html>
+
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="login.html">Login</a>
+        <a href="sign up.html">Sign Up</a>
+    </nav>
+    <hr>
+    <h4>Book Name: </h4>
+    <h4> Author: </h4>
+    <h4> Category: </h4>
+    <h4> Status: </h4>
+    <h4>Description: </h4>
+    <button id="borrowBtn" style="display: none;"> Borrow</button>
+    <div id="adminActions" style="display: none" ;>
+        <button id="editBtn">Edit</button>
+        <button id="deleteBtn">Delete</button>
+    </div>
+    <script>
+
+        const currentUserRole = 'user';
+
+        const borrowBtn = document.getElementById('borrowBtn');
+        const adminActions = document.getElementById('adminActions');
+        const statusText = document.getElementById('status').innerText.toLowerCase();
+
+        if (currentUserRole === 'admin') {
+            adminActions.style.display = 'block';
+        } else if (currentUserRole === 'user' && statusText === 'available') {
+            borrowBtn.style.display = 'inline-block';
+        }
+    </script>
+
+
+
+</body>
+
+</html>
