@@ -13,13 +13,20 @@
 <nav>
 <a href="home.html">Home</a> &nbsp; | &nbsp;        
 <a href="books.html">Books</a> &nbsp; | &nbsp;
-<a href="borrowed-books.html">Borrowed Books</a> &nbsp; | &nbsp;
-<a href="login.html">Login</a> &nbsp; | &nbsp;
-<a href="addbook.html">Add Book</a> &nbsp; | &nbsp;
-<a href="borrowed-books.html">Borrowed Books</a> &nbsp; | &nbsp;
+
+<span id="admin-links" style="display: none;">
+    <a href="addbook.html">Add Book</a>
+    <a href="editbook.html">Edit Book</a>
+    <a href="admin-dashboard.html">Dashboard</a> &nbsp; | &nbsp;
+</span>
+
+<span id="user-links" style="display: none;">
+        <a href="borrowed-books.html">Borrowed Books</a> &nbsp; | &nbsp;
+    </span>
+
 <a href="index.html">Index</a> &nbsp; | &nbsp;
-<a href="editbook.html">Edit Book</a> &nbsp; | &nbsp;
 <a href="signup.html">Sign Up</a>
+<a href="login.html">Login</a>
 </nav>
 <hr>
 
@@ -33,59 +40,91 @@
 <th>Author</th>
 <th>Category</th>
 <th>Status</th>
-<th>Actions</th>    
+<th>
+    <center>
+            <button class="user-only" style="display: none;">Borrow</button>
+
+            <span class="admin-only" style="display: none;">
+                <a href="editbook.html?id=1"><button>Edit</button></a>
+                <button style="color: rgb(192, 106, 133);" onclick="deleteBook(1)">Delete</button>
+            </span>
+
+            <small class="guest-only">Login to borrow</small>
+        </center>
+    </th>    
 </tr>
 
 <tr>
 <td><center>1</center></td>             
-<td><a href="book-details.html">Clean Code</a></td>    <!-- this should be replaced with only book name, when clicking -->
+<td><a href="books-details.html?id=1">Clean Code</a></td>    <!-- this should be replaced with only book name, when clicking -->
 <td>Robert Martin</td>                                  <!-- on it shows books-details.html (NOT book-details)-->
 <td>Programming</td>                                    <!--the a href statment should be someting like this: <a href="books-details.html?id=1">Clean Code</a> -->
 <td>Available</td>                                      <!--where id = 1 is the book's id and so on for each book-->
 <td>
-    <center>
-        <button>Borrow</button>
-    </center>
-</td>
+        <center>
+            <button class="user-action" style="display: none;">Borrow</button>
+            
+            <span class="admin-action" style="display: none;">
+                <a href="editbook.html?id=1"><button>Edit</button></a>
+                <button style="color: rgb(192, 106, 133);">Delete</button>
+            </span>
+        </center>
+    </td>
 </tr>
 
 <tr>
 <td><center>2</center></td>
-<td><a href="book-details.html">Atomic Habits</a></td>
+<td><a href="books-details.html?id=2">Atomic Habits</a></td>
 <td>James Clear</td>
 <td>Self Development</td>
 <td>Not Available</td>
 <td>
-    <center>
-        <button disabled>Borrow</button>
-    </center>   
+        <center>
+            <button class="user-action" style="display: none;">Borrow</button>
+            
+            <span class="admin-action" style="display: none;">
+                <a href="editbook.html?id=1"><button>Edit</button></a>
+                <button style="color: rgb(192, 106, 133);">Delete</button>
+            </span>
+        </center>
 </td>    
 </tr>
 
 <tr>
 <td><center>3</center></td>
-<td><a href="book-details.html">Algorithm Design</a></td>
+<td><a href="books-details.html?id=3">Algorithm Design</a></td>
 <td>tomas H. Comen</td>
 <td>Self Development</td>
 <td>Available</td>
 <td>
-    <center>
-        <button >Borrow</button>
-    </center>   
+        <center>
+            <button class="user-action" style="display: none;">Borrow</button>
+            
+            <span class="admin-action" style="display: none;">
+                <a href="editbook.html?id=1"><button>Edit</button></a>
+                <button style="color: rgb(192, 106, 133);">Delete</button>
+            </span>
+        </center>
+      
 </td>    
 </tr>
 
 
 <tr>
 <td><center>4</center></td>
-<td><a href="book-details.html">Matilda</a></td>
+<td><a href="books-details.html?id=4">Matilda</a></td>
 <td>Roald Dahl</td>
 <td>Self Development</td>
 <td>Available</td>
 <td>
-    <center>
-        <button disabled >Borrow</button>
-    </center>   
+        <center>
+            <button class="user-action" style="display: none;">Borrow</button>
+            
+            <span class="admin-action" style="display: none;">
+                <a href="editbook.html?id=1"><button>Edit</button></a>
+                <button style="color: rgb(192, 106, 133);">Delete</button>
+            </span>
+        </center> 
 </td>    
 </tr>
 
