@@ -1,49 +1,89 @@
 <!DOCTYPE html>
 <html>
-
+<head>
+    <title>Book Details</title>
+</head>
 <body>
     <table width="100%">
-    <tr>
-        <td>
-            <a href="index.html">Home</a> &nbsp; | &nbsp;
-            <a href="books.html">View Books</a> &nbsp; | &nbsp;
-            <a href="login.html">Login</a> &nbsp; | &nbsp;
-            <a href="signup.html">Sign Up</a>
-        </td>
-
-        <td align="right">
-            <a href="login.html">Logout</a>
-        </td>
-    </tr>
-</table>
+        <tr>
+            <td>
+                <a href="home.html">Home</a> &nbsp; | &nbsp;
+                <a href="books.html">View Books</a> &nbsp; | &nbsp;
+                <a href="login.html">Login</a> &nbsp; | &nbsp;
+                <a href="signup.html">Sign Up</a>
+            </td>
+            <td align="right">
+                <a href="login.html">Logout</a>
+            </td>
+        </tr>
+    </table>
     <hr>
-    <h4>Book Name: </h4>
-    <h4> Author: </h4>
-    <h4> Category: </h4>
-    <h4> Status: </h4>
-    <h4>Description: </h4>
-    <button id="borrowBtn" style="display: none;"> Borrow</button>
-    <div id="adminActions" style="display: none" ;>
+
+    <div id="book-details">
+        <p>Loading book details...</p>
+    </div>
+    <button id="borrowBtn" style="display: none;">Borrow</button>
+    <div id="adminActions" style="display: none;">
         <button id="editBtn">Edit</button>
         <button id="deleteBtn">Delete</button>
     </div>
+    <script src="books-data.js"></script>
+
     <script>
+        const currentUserRole = 'user';   
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('id');
+        const book = books.find(b => b.id == bookId);  
+        const detailsContainer = document.getElementById('book-details');
 
-        const currentUserRole = 'user';
+        if (!book) {
+            detailsContainer.innerHTML = '<p style="color: red;">Book not found. Please go back and try again.</p>';
+        } else {
+            let detailsHTML = `
+                <h2>${book.title}</h2>
+                <p><strong>Author:</strong> ${book.author}</p>
+                <p><strong>Category:</strong> ${book.category || '—'}</p>
+                <p><strong>Status:</strong> ${book.status || 'Unknown'}</p>
+                <p><strong>Description:</strong> ${book.description || 'No description available.'}</p>
+            `;
+            if (book.imageUrl) {
+                detailsHTML += `<p><img src="${book.imageUrl}" alt="${book.title} cover" style="max-width: 200px;"></p>`;
+            }
+            if (book.authorWikipedia) {
+                detailsHTML += `<p><strong>More about the author:</strong> <a href="${book.authorWikipedia}" target="_blank">Wikipedia</a></p>`;
+            }
 
-        const borrowBtn = document.getElementById('borrowBtn');
-        const adminActions = document.getElementById('adminActions');
-        const statusText = document.getElementById('status').innerText.toLowerCase();
+            detailsContainer.innerHTML = detailsHTML;
+            const borrowBtn = document.getElementById('borrowBtn');
+            const adminActions = document.getElementById('adminActions');
+            if (currentUserRole === 'admin') {
+                adminActions.style.display = 'block';
+            }
+            else if (currentUserRole === 'user' && book.status && book.status.toLowerCase() === 'available') {
+                borrowBtn.style.display = 'inline-block';
+            }
+            borrowBtn.onclick = () => {
+                alert(`Borrowing "${book.title}" – This would update the book's status in a real system.`);
+            };
 
-        if (currentUserRole === 'admin') {
-            adminActions.style.display = 'block';
-        } else if (currentUserRole === 'user' && statusText === 'available') {
-            borrowBtn.style.display = 'inline-block';
+            const editBtn = document.getElementById('editBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+
+            if (editBtn) {
+                editBtn.onclick = () => {
+                    alert(`Edit "${book.title}" – Redirect to edit page or open a form.`);
+                };
+            }
+
+            if (deleteBtn) {
+                deleteBtn.onclick = () => {
+                    if (confirm(`Are you sure you want to delete "${book.title}"?`)) {
+                        alert(`Deleting "${book.title}" – This would remove it from the database.`);
+                    }
+                };
+            }
         }
     </script>
 
-
-
 </body>
-
 </html>

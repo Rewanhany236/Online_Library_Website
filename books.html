@@ -6,9 +6,12 @@
 </head>
 
 <body>
-
+    
+ <!--how borrowed books, editbook add book appear for a someone just viewing the site?! -->
+ <!--edit book, add book for admin ONLY, the navigation bar has to be dynamic enoguh to wheather show these pages-->
+ <!--depending on the status of the user-->
 <nav>
-<a href="home.html">Home</a> &nbsp; | &nbsp;
+<a href="home.html">Home</a> &nbsp; | &nbsp;        
 <a href="books.html">Books</a> &nbsp; | &nbsp;
 <a href="borrowed-books.html">Borrowed Books</a> &nbsp; | &nbsp;
 <a href="login.html">Login</a> &nbsp; | &nbsp;
@@ -34,11 +37,11 @@
 </tr>
 
 <tr>
-<td><center>1</center></td>
-<td><a href="book-details.html">Clean Code</a></td>
-<td>Robert Martin</td>
-<td>Programming</td>
-<td>Available</td>
+<td><center>1</center></td>             
+<td><a href="book-details.html">Clean Code</a></td>    <!-- this should be replaced with only book name, when clicking -->
+<td>Robert Martin</td>                                  <!-- on it shows books-details.html (NOT book-details)-->
+<td>Programming</td>                                    <!--the a href statment should be someting like this: <a href="books-details.html?id=1">Clean Code</a> -->
+<td>Available</td>                                      <!--where id = 1 is the book's id and so on for each book-->
 <td>
     <center>
         <button>Borrow</button>
