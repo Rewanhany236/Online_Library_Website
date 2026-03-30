@@ -13,14 +13,38 @@ body {
   --text-secondary: #333333; /* For light backgrounds */
   --white: #FFFFFF;
 }
-/* body{
-    background-color: #e9e1d1;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    color: #291c0d; 
+.navbar {
+    background-color: var(--color-accent); /* البني الغامق من الصور */
+    padding: 15px 8%; /* مساحة جانبية واسعة لراحة العين */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--color-base); /* خط بيج رفيع للفصل */
+}
+
+/* اللوجو أو اسم المكتبة */
+.nav-logo {
+    font-family: 'Garamond', serif; /* خط كلاسيكي للمكتبة */
+    font-size: 1.6rem;
+    color: var(--color-background); /* اللون الكريمي الفاتح */
+    text-decoration: none;
+    font-weight: bold;
+}
+/* قائمة اللينكات */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* مسافة بين كل لينك والثاني */
     margin: 0;
     padding: 0;
-    line-height: 1.6;
-} */
+}
+.nav-links a {
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
 
 body {
   font-family: 'Open Sans', 'Helvetica Neue', sans-serif; /* Clean body text */
@@ -28,6 +52,7 @@ body {
   background-color: var(--color-background);
   line-height: 1.6;
 }
+
 /* 1. العناوين (درجة غامقة وقوية) */
 h1 {
     color: #3e2723; /* بني داكن جداً */
@@ -109,7 +134,10 @@ small, .guest-only {
     border-top-right-radius: 0; 
 }
 
+                                                    /* btn style */
+
 .btn {
+    background-color:#e8d8c1;
     display: inline-block;
     padding: 12px 28px;
     font-family: 'Open Sans', sans-serif;
@@ -122,4 +150,46 @@ small, .guest-only {
     transition: all 0.3s ease; /* تنعيم الحركة */
     border: none;
     outline: none;
+}
+.btn:hover {
+    background-color: var(--color-accent); /* يقلب لبني فاتح شوية #6E4F3E */
+}
+
+                                                  /* form style */ 
+
+.library-form-container {
+    background-color: #efe9df; /* درجة أفتح شوية من الكريمي عشان تنطق */
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid var(--color-background);
+    max-width: 500px; /* عرض مناسب للفورم */
+    margin: 20px auto;
+}
+
+/* تنسيق مجموعة المدخلات (Label + Input) */
+.form-group {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px; /* مسافة بين العنوان والخانة */
+}
+
+/* تنسيق العناوين (Labels) */
+.form-group label {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary); /* البني الغامق */
+}
+
+/* تنسيق خانات الكتابة (Inputs & Textarea) */
+.form-control {
+    padding: 12px 15px;
+    border: 1px solid var(--color-base); /* لون بيج هادي للبرواز */
+    border-radius: 10px;
+    background-color: var(--white);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    outline: none;
+    transition: border-color 0.2s;
 }

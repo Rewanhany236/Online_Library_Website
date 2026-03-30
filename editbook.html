@@ -5,39 +5,43 @@
         <link rel="stylesheet" href="CSS/style.css">
     </head>
     <body>
-        <nav>
-            <a href="home.html">Home</a> &nbsp; | &nbsp;
-            <a href="books.html"> Books</a> &nbsp; | &nbsp;
-            <a href="admin-dashboard.html"><b>Admin Dashboard</b> </a> &nbsp; | &nbsp;
-            <a href="#">Logout</a> 
+        <nav class="navbar">
+           <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
+                <li><a href="#"> Logout </a></li>
+            </ul>
         </nav>
+    
     <hr>
     <h1> <center>Edit Book</center></h1>
     <hr>
     <br>
-    <center>
-         <form>
+    <div class="library-form-container">
+    <form>
+    <div class="form-group">
 
         <label>Book Name:</label> 
-        <input type="text" id="book-name" name="book-name" required> <br><br>
+        <input type="text"  class="form-control"   id="book-name" name="book-name" required> <br><br>
 
          <label> ID:</label>  
-        <input type="text" id="ID" name="ID" required><br><br>
+        <input type="text" class="form-control" id="ID" name="ID" required><br><br>
 
         <label> Author:</label>  
-        <input type="text" id="Author" name="Author" required> <br><br> 
+        <input type="text" class="form-control" id="Author" name="Author" required> <br><br> 
 
         <label> Category:</label>  
-        <input type="text" id="Category" name="Category" required><br><br>
+        <input type="text" class="form-control" id="Category" name="Category" required><br><br>
 
         <label> Description: </label>  
-        <input type="text" id="Description" name="Description" required><br><br>
-        
-        <button type="sumbit"> Done </button>  &nbsp; | &nbsp;
-        <a href="admin-dashboard.html" class="cancel">cancel</a>
+        <input type="text" class="form-control" id="Description" name="Description" required><br><br>
+        </div>
+        <button class="btn" type="sumbit"> Done </button>   
+        <button class="btn" type="button"> Cancel  </button>   
 
         </form>
-    </center>
+    </div>
    
     </body>
     
