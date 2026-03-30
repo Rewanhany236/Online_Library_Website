@@ -64,5 +64,5 @@ The website includes a navigation bar available on all pages to help users navig
 Course Information
 
 Course: IS231 – Web Technology
-Project: Phase 1
+Project: Phase 2
 Academic Year: 2025 / 2026
