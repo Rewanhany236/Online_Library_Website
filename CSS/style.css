@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+:root {
+  --color-primary: #2D1C1E; /* Dark brown, from top card */
+  --color-accent: #6E4F3E; /* Medium brown */
+  --color-base: #A78D78; /* Dark beige */
+  --color-highlight: #BEBBA9; /* Green-beige */
+  --color-background: #E1D4C2; /* Cream-beige, from bottom card */
+  --text-primary: #FFFFFF; /* For dark backgrounds */
+  --text-secondary: #333333; /* For light backgrounds */
+  --white: #FFFFFF;
+}
+/* body{
+    background-color: #e9e1d1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    color: #291c0d; 
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+} */
+
+body {
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif; /* Clean body text */
+  color: var(--text-secondary);
+  background-color: var(--color-background);
+  line-height: 1.6;
+}
+/* 1. العناوين (درجة غامقة وقوية) */
+h1 {
+    color: #3e2723; /* بني داكن جداً */
+    font-size: 32px;
+    font-weight: 800; /* سميك جداً */
+    margin-top: 40px;
+}
+
+/* 2. عناوين الجدول (درجة فاتحة فوق خلفية غامقة) */
+th {
+    background-color: #5d4037; /* بني متوسط */
+    color: #ffffff; /* أبيض صريح */
+    font-size: 14px;
+    letter-spacing: 1px; /* مسافات بسيطة بين الحروف لشكل مودرن */
+}
+
+/* 3. النصوص العادية (درجة متوسطة ومريحة) */
+td, p {
+    color: #5d4037; /* بني كاكاو */
+    font-size: 16px;
+    font-weight: 400; /* سمك عادي */
+}
+
+/* 4. التفاصيل الباهتة (درجة فاتحة للمعلومات الثانوية) */
+small, .guest-only {
+    color: #8d6e63; /* بني فاتح هادي */
+    font-size: 13px;
+    font-style: italic; /* مائل لتمييزه كملحوظة */
+}
+
+/* Table Styles */
+.library-table-container {
+    margin: 20px 0;
+    border-radius: 15px; /* نفس تدويرة الصور اللي بعتيها */
+    overflow: hidden; /* عشان الزوايا المستديرة تبان */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-background); /* اللون الكريمي الفاتح */
+}
+
+.library-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.library-table thead {
+    background-color: var(--color-primary); /* البني الغامق للهيدر */
+    color: #FFFFFF;
+    text-align: right; /* عشان المحتوى عربي */
+}
+
+.library-table th {
+    padding: 15px 20px;
+    font-family: 'Garamond', serif; /* خط سيريف للعناوين */
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.library-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--color-highlight); /* فواصل رقيقة */
+    color: var(--text-secondary);
+}
+
+/* تأثير التبادل بين الصفوف (Zebra Stripes) */
+.library-table tbody tr:nth-child(even) {
+    background-color: rgba(190, 187, 169, 0.2); /* درجة خفيفة من البيج */
+}
+
+/* تأثير عند تمرير الماوس */
+.library-table tbody tr:hover {
+    background-color: var(--color-highlight);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* أول وآخر عمود عشان التنسيق */
+.library-table td:first-child, .library-table th:first-child {
+    border-top-right-radius: 0; 
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 50px; /* تدويرة كاملة "Pill shape" زي اللي في الصورة */
+    transition: all 0.3s ease; /* تنعيم الحركة */
+    border: none;
+    outline: none;
+}
