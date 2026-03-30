@@ -5,7 +5,7 @@ Project Overview
 The Online Library is a web application designed to help users browse, search, and borrow books easily.
 The website provides a simple and user-friendly interface where users can explore available books, view detailed information, and borrow books when they are available.
 
-This project was developed as part of the IS231 – Web Technology course (Phase 1).
+This project was developed as part of the IS231 – Web Technology course .
 
 ---
 
@@ -48,8 +48,10 @@ The project includes the following main pages:
 Technologies Used
 
 - HTML
-
-(No frameworks were used as required for Phase 1.)
+  
+- css
+  
+- javascript
 
 ---
 
