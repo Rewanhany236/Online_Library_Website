@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
-body {
-    font-family: 'Poppins', sans-serif;
-}
+
 :root {
   --color-primary: #2D1C1E; /* Dark brown, from top card */
   --color-accent: #6E4F3E; /* Medium brown */
@@ -20,7 +18,11 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 3px solid var(--color-base); /* خط بيج رفيع للفصل */
+    width: 100%;       /* يضمن إنه واخد العرض كله */
+    box-sizing: border-box; /* عشان الـ padding ميخرجش الـ nav بره الشاشة */
+    direction: rtl;    /* مهم جداً عشان الترتيب يبدأ من اليمين (اللوجو) للشمال */
 }
+
 
 /* اللوجو أو اسم المكتبة */
 .nav-logo {
@@ -29,6 +31,11 @@ body {
     color: var(--color-background); /* اللون الكريمي الفاتح */
     text-decoration: none;
     font-weight: bold;
+}
+.nav-right img {
+    height: 40px; /* الارتفاع المثالي عشان يتناسب مع الـ Nav */
+    width: auto;  /* يخلي العرض يتظبط لوحده ومتبقاش ممطوطة */
+    object-fit: contain; /* يضمن إن الصورة مش مقصوصة */
 }
 /* قائمة اللينكات */
 .nav-links {
@@ -45,12 +52,63 @@ body {
     font-weight: 500;
     transition: color 0.2s ease;
 }
+.nav-search {
+    display: flex;
+    flex: 1; /* يخليه يملأ الفراغ اللي في النص */
+    max-width: 500px;
+    margin: 0 20px;
+}
+
+.nav-search input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0 25px 25px 0; /* حواف ناعمة يمين */
+    outline: none;
+}
+
+.nav-search button {
+    padding: 10px 20px;
+    background-color: #e74c3c; /* لون السيرش الأحمر */
+    color: white;
+    border: none;
+    border-radius: 25px 0 0 25px; /* حواف ناعمة شمال */
+    cursor: pointer;
+}
+
+/* 3. تنسيق اللينكات (الـ Labels الناعمة) */
+.nav-left {
+    display: flex;
+    gap: 10px; /* مسافة ثابتة بين اللينكات بدل الـ | */
+    align-items: center;
+    direction: ltr; /* عشان كلمات الإنجليزي تترتب صح جوه الجزء ده */
+}
+
+.nav-left a {
+    color: var(--color-background);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 20px; /* حواف ناعمة جداً */
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.nav-left a:hover {
+    background-color: rgba(255, 255, 255, 0.15); /* إضاءة خفيفة وناعمة */
+}
+/* تمييز زرار الـ Login */
+.login-btn {
+    border: 1px solid var(--color-background); /* برواز رقيق */
+}
 
 body {
-  font-family: 'Open Sans', 'Helvetica Neue', sans-serif; /* Clean body text */
+  font-family: 'Poppins', sans-serif;
   color: var(--text-secondary);
   background-color: var(--color-background);
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 /* 1. العناوين (درجة غامقة وقوية) */
@@ -272,3 +330,48 @@ small, .guest-only {
 .signup-login-link a:hover {
     text-decoration: underline;
 }
+
+.book-card{
+    background-color:#e6e0dc ;
+    border: 2px solid #a78d78;
+    border-radius: 15px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    flex: 0 1 250px; 
+}
+
+.book-card h3 {
+    color: var(--color-primary); 
+    font-size: 1.2rem;
+    margin: 10px 0;
+    
+    
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
+}
+
+
+.book-card p:last-of-type { 
+    color: var(--color-accent); 
+    font-size: 0.9rem;
+    
+  
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); 
+}
+.book-card:hover {
+    
+    transform: translateY(-8px); 
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); 
+    border-color: #6d4c41;
+    filter: brightness(1.02);
+}
+.books-container {
+    display: flex;         
+    flex-wrap: wrap;       
+    gap: 25px;            
+    justify-content: center; 
+    padding: 40px 20px;    
+}
+
