@@ -1,32 +1,58 @@
-function displayBorrowedBooks() {
-    const tableBody = document.getElementById("borrowedBooksTable");
-    if (!tableBody) return;
+function displayBorrowedBooks(bookList = null) {
+    const container = document.getElementById("borrowedBooksContainer");
+    if (!container) return;
 
     let borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks")) || [];
 
-    tableBody.innerHTML = "";
+    if (bookList) {
+        borrowedBooks = bookList;
+    }
+
+    container.innerHTML = "";
 
     if (borrowedBooks.length === 0) {
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="5">No borrowed books yet.</td>
-            </tr>
+        container.innerHTML = `
+            <p style="text-align:center; font-size: 18px;">No borrowed books yet.</p>
         `;
         return;
     }
 
     borrowedBooks.forEach(book => {
-        const row = `
-            <tr>
-                <td>${book.id}</td>
-                <td>${book.title}</td>
-                <td>${book.author}</td>
-                <td>${book.category}</td>
-                <td>${book.borrowDate}</td>
-            </tr>
+        const card = document.createElement("div");
+        card.classList.add("book-card");
+
+        card.innerHTML = `
+            <img src="${book.imageUrl}" alt="${book.title}" class="book-img">
+            <h3>${book.title}</h3>
+            <p>By ${book.author}</p>
+            <p><strong>Category:</strong> ${book.category}</p>
+            <p><strong>Borrow Date:</strong> ${book.borrowDate}</p>
+            <div class="actions">
+                <button class="btn" disabled>Borrowed</button>
+            </div>
         `;
-        tableBody.innerHTML += row;
+
+        container.appendChild(card);
+    });
+}
+
+function setupBorrowedSearch() {
+    const searchInput = document.getElementById("borrowedSearchInput");
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", function () {
+        const searchValue = searchInput.value.toLowerCase();
+
+        let borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks")) || [];
+
+        const filteredBooks = borrowedBooks.filter(book =>
+            book.title.toLowerCase().includes(searchValue) ||
+            book.author.toLowerCase().includes(searchValue)
+        );
+
+        displayBorrowedBooks(filteredBooks);
     });
 }
 
 displayBorrowedBooks();
+setupBorrowedSearch();
