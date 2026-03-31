@@ -9,24 +9,6 @@ This project was developed as part of the IS231 – Web Technology course (Phase
 
 ---
 
-Team Members
-
-Name| ID| Section| Email
-
-Rawan Hany| 20240198| S29| 20240198@stud.fci-cu.edu.eg
-
-Mariam Mahmoud| 20240582| S29| 20240582@stud.fci-cu.edu.eg
-
-Malak Gamal| 20240609| S29| 20240609@stud.fci-cu.edu.eg
-
-Yara Khaled| 20240654| S29| 20240654@stud.fci-cu.edu.eg
-
-Jana Yasser| 20240143| S29| 20240143@stud.fci-cu.edu.eg
-
-Dana Kamal| 20243024| S29| 20243024@stud.fci-cu.edu.eg
-
----
-
 Website Features
 
 User Features

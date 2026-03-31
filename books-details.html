@@ -6,17 +6,17 @@
 </head>
 <body>
     <table width="100%">
-        <tr>
-            <td>
+         <tr>
+             <td>
                 <a href="home.html">Home</a> &nbsp; | &nbsp;
                 <a href="books.html">View Books</a> &nbsp; | &nbsp;
                 <a href="login.html">Login</a> &nbsp; | &nbsp;
                 <a href="signup.html">Sign Up</a>
-            </td>
+             </td>
             <td align="right">
                 <a href="login.html">Logout</a>
-            </td>
-        </tr>
+             </td>
+         </tr>
     </table>
     <hr>
 
@@ -40,21 +40,24 @@
         if (!book) {
             detailsContainer.innerHTML = '<p style="color: red;">Book not found. Please go back and try again.</p>';
         } else {
+            // New layout with image first
             let detailsHTML = `
-                <h2>${book.title}</h2>
-                <p><strong>Author:</strong> ${book.author}</p>
-                <p><strong>Category:</strong> ${book.category || '—'}</p>
-                <p><strong>Status:</strong> ${book.status || 'Unknown'}</p>
-                <p><strong>Description:</strong> ${book.description || 'No description available.'}</p>
+                <div class="book-detail-layout">
+                    <div class="book-image-area">
+                        ${book.imageUrl ? `<img src="${book.imageUrl}" alt="${book.title} cover" class="book-cover">` : '<div class="no-image">No image available</div>'}
+                    </div>
+                    <div class="book-info-area">
+                        <h2>${book.title}</h2>
+                        <p><strong>Author:</strong> ${book.author}</p>
+                        <p><strong>Category:</strong> ${book.category || '—'}</p>
+                        <p><strong>Status:</strong> ${book.status || 'Available'}</p>
+                        <p><strong>Description:</strong> ${book.description || 'No description available.'}</p>
+                        ${book.authorWikipedia ? `<p><strong>More about the author:</strong> <a href="${book.authorWikipedia}" target="_blank">Wikipedia</a></p>` : ''}
+                    </div>
+                </div>
             `;
-            if (book.imageUrl) {
-                detailsHTML += `<p><img src="${book.imageUrl}" alt="${book.title} cover" style="max-width: 200px;"></p>`;
-            }
-            if (book.authorWikipedia) {
-                detailsHTML += `<p><strong>More about the author:</strong> <a href="${book.authorWikipedia}" target="_blank">Wikipedia</a></p>`;
-            }
-
             detailsContainer.innerHTML = detailsHTML;
+
             const borrowBtn = document.getElementById('borrowBtn');
             const adminActions = document.getElementById('adminActions');
             if (currentUserRole === 'admin') {
@@ -85,6 +88,5 @@
             }
         }
     </script>
-
 </body>
 </html>
