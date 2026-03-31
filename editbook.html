@@ -5,18 +5,29 @@
         <link rel="stylesheet" href="CSS/style.css">
     </head>
     <body>
-        <nav class="navbar">
-           <ul class="nav-links">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="books.html">Books</a></li>
-                <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
-                <li><a href="#"> Logout </a></li>
-            </ul>
-        </nav>
+        
+ <nav class="navbar">
+    <div class="nav-right">
+        <a href="books.html" class="logo-container">
+    <img src="images/read.png" alt="لوجو المكتبة">
+    <span>مكتبة المكتبه</span>
+    </a>
+</div>
+
+<div class="nav-search">
+    <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
+    <button type="submit">🔍</button>
+</div>
+
+<div class="nav-left">
+<a href="home.html">Home</a>    
+<a href="books.html">Books</a> 
+<a href="profile.html">profile</a>
+<a href="#" id="logout-btn">logout</a>
+</div>
+</nav>
     
-    <hr>
     <h1> <center>Edit Book</center></h1>
-    <hr>
     <br>
     <div class="library-form-container">
     <form>
@@ -26,7 +37,7 @@
         <input type="text"  class="form-control"   id="book-name" name="book-name" required> <br><br>
 
          <label> ID:</label>  
-        <input type="text" class="form-control" id="ID" name="ID" required><br><br>
+        <input type="text" class="form-control" id="ID" name="ID" readonly><br><br>
 
         <label> Author:</label>  
         <input type="text" class="form-control" id="Author" name="Author" required> <br><br> 
@@ -37,12 +48,12 @@
         <label> Description: </label>  
         <input type="text" class="form-control" id="Description" name="Description" required><br><br>
         </div>
-        <button class="btn" type="sumbit"> Done </button>   
-        <button class="btn" type="button"> Cancel  </button>   
-
+        <button class="btn" type="submit" id="Done-btn"> Done </button>   
+        <button class="btn" type="button" id="cancel-btn" onclick="window.location.href='books.html'"> Cancel </button>
         </form>
     </div>
-   
+<script src="js/logout.js"></script>
+<script src="js/editbook.js"></script>
     </body>
     
 </html>
