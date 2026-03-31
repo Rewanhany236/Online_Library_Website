@@ -9,17 +9,34 @@
 
 <body>
 
+<nav>
+    <div class="nav-right">
+        <a href="books.html" class="logo-container"></a>
+    <img src="images/read.png" alt="لوجو المكتبة">
+    <span>مكتبة المكتبه</span>
+</div>
 
-<nav class="navbar">
-    <a href="home.html" class="nav-logo">Library</a>
+<div class="nav-search">
+    <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
+    <button type="submit">🔍</button>
+</div>
 
-    <ul class="nav-links">
-        <li><a href="home.html">Home</a></li>
-        <li><a href="books.html">Books</a></li>
-        <li><a href="borrowed-books.html">Borrowed Books</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="signup.html">Sign Up</a></li>
-    </ul>
+<div class="nav-left">
+<a href="home.html">Home</a>    
+<a href="books.html">Books</a> 
+
+<span id="admin-links" style="display: none;">
+    <a href="addbook.html">Add Book</a>
+    <a href="editbook.html">Edit Book</a>
+
+</span>
+
+<span id="user-links" style="display: none;">
+        <a href="borrowed-books.html">Borrowed Books</a> 
+    </span>
+<a href="signup.html">Sign Up</a> 
+<a href="login.html">Login</a>
+    </div>
 </nav>
 
 
@@ -58,7 +75,7 @@
 </form>
 
 
-<script src="script.js"></script>
+<script src="sginup.js"></script>
 
 </body>
 
