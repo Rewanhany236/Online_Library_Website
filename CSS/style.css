@@ -356,6 +356,7 @@ small, .guest-only {
 .book-card p:last-of-type { 
     color: var(--color-accent); 
     font-size: 0.9rem;
+  
     
   
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); 
@@ -374,4 +375,129 @@ small, .guest-only {
     justify-content: center; 
     padding: 40px 20px;    
 }
+/* ========== PROFILE PAGE ========== */
 
+/* العنوان */
+.profile-title {
+    text-align: center;
+    color: #2D1C1E;
+    margin-top: 30px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* الكونتينر */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+/* الكارد */
+.profile-card {
+    background-color: #EFE9DF;
+    width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* الهيدر */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* صورة المستخدم */
+.profile-avatar {
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+/* اسم المستخدم */
+.profile-header h2 {
+    color: #2D1C1E;
+    font-size: 20px;
+}
+
+/* الفورم */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* اللابل */
+.profile-form label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2D1C1E;
+}
+
+/* الحقول */
+.profile-form input,
+.profile-form select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #A78D78;
+    background-color: #fff;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+/* تأثير الفوكس */
+.profile-form input:focus,
+.profile-form select:focus {
+    border-color: #6E4F3E;
+    box-shadow: 0 0 5px rgba(110,79,62,0.3);
+    outline: none;
+}
+
+/* الأزرار */
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* زر عام */
+.profile-actions .btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* زر حفظ */
+.profile-actions .btn:first-child {
+    background-color: #6E4F3E;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.profile-actions .btn:first-child:hover {
+    background-color: #2D1C1E;
+}
+
+/* زر logout */
+.profile-actions .btn:last-child {
+    background-color: #BEBBA9;
+    color: #2D1C1E;
+}
+
+.profile-actions .btn:last-child:hover {
+    background-color: #A78D78;
+}
+
+/* موبايل */
+@media (max-width: 480px) {
+    .profile-card {
+        width: 90%;
+        padding: 20px;
+    }
+}
