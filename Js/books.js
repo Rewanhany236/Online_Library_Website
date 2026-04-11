@@ -1,15 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // 📌 نجيب نوع المستخدم
-    const userRole = localStorage.getItem("role");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const userRole = currentUser?.type;
 
     console.log("Current Role:", userRole);
 
-    // 📌 عناصر الناف بار
     const adminLinks = document.getElementById("admin-links");
     const authLinks = document.getElementById("auth-links");
     const profileLinks = document.getElementById("profile-links");
-
 
     if (userRole === "admin") {
         if (adminLinks) adminLinks.style.display = "inline";
@@ -25,11 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (authLinks) authLinks.style.display = "inline";
     }
 
-
     const adminButtons = document.querySelectorAll(".admin-only");
     const userButtons = document.querySelectorAll(".user-only");
 
-   
     if (userRole === "admin") {
         adminButtons.forEach(el => {
             el.style.display = "block";
@@ -42,8 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-  
-    userButtons.forEach((btn, index) => {
+    userButtons.forEach((btn) => {
         btn.addEventListener("click", function () {
             alert("The book is borrowed successfully");
         });
@@ -55,6 +50,6 @@ function deleteBook(id) {
     const confirmDelete = confirm("Are you certain that you want to delete this book?");
 
     if (confirmDelete) {
-        alert("Book with id: " + id +" is deleted successfully " );
+        alert("Book with id: " + id + " is deleted successfully");
     }
 }

@@ -54,25 +54,27 @@
 }
 .nav-search {
     display: flex;
-    flex: 1; /* يخليه يملأ الفراغ اللي في النص */
+    flex: 1;
     max-width: 500px;
     margin: 0 20px;
+
+    border-radius: 50px;   /* الشكل البيضاوي */
+    overflow: hidden;      /* يخليهم قطعة واحدة */
+    border: 1px solid #ccc;
 }
 
 .nav-search input {
     flex: 1;
     padding: 10px 15px;
     border: none;
-    border-radius: 0 25px 25px 0; /* حواف ناعمة يمين */
     outline: none;
 }
 
 .nav-search button {
     padding: 10px 20px;
-    background-color: #e74c3c; /* لون السيرش الأحمر */
+    background-color: var(--color-background); 
     color: white;
     border: none;
-    border-radius: 25px 0 0 25px; /* حواف ناعمة شمال */
     cursor: pointer;
 }
 
@@ -224,12 +226,11 @@ small, .guest-only {
     margin: 20px auto;
 }
 
-/* تنسيق مجموعة المدخلات (Label + Input) */
 .form-group {
     margin-bottom: 8px;
     display: flex;
     flex-direction: column;
-    gap: 1px; /* مسافة بين العنوان والخانة */
+    gap: 1px; 
 }
 
 /* تنسيق العناوين (Labels) */

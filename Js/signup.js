@@ -45,7 +45,6 @@ function validateSignup() {
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
 
-    // 🔥 Save current user (for profile)
     localStorage.setItem("currentUser", JSON.stringify(newUser));
 
     alert("Registered successfully!");

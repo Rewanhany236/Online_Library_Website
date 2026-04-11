@@ -1,55 +1,80 @@
 <!DOCTYPE html>
 <html>
-    <head><title>Online Library</title>
-      <link rel="stylesheet" href="CSS/style.css">
-   
-   
-   </head>
+<head>
+    <title>Online Library</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/home.css">
+</head>
 
-    <body>
-       <nav>
-        <a href="home.html">Home</a> &nbsp; | &nbsp;
-        <a href="books.html">Books</a> &nbsp; | &nbsp;
-        <a href="login.html">Login</a> &nbsp; | &nbsp;
-        <a href="signup.html">Sign Up</a>
-    </nav>
+<body>
 
-       <hr>
-       <center>
-       <h1>Welcome to Our Online Library</h1>
-       <h2>Explore the World of Books</h2>
-       <form>
-         <input type="text" placeholder="Search for books">
-        <input type="submit" value="Search">
-       </form>
-       <h2>Library Features</h2>
-     <big>
-        -Browse a wide range of books <br>
-        -View details info about each book <br>
-        -Borrow books easily <br>
-        -Access the library anytime online <br>
-     </big>
-  
-       <h2>About Us</h2>
-       <p>
-        <big>This is a digital Library website that provides a wide collection of books<br>
-        in different categories such as programming,science,literature, and more. <br>
-        Users can easily browse books, read their details, and borrow them online.<br>
-        Our goal is to make reading easier and more accessible for everyone.</big>
-       </p>
+<nav class="navbar">
+    <div class="nav-right">
+            <a href="books.html" class="logo-container">
+                <img src="images/read.png" alt="لوجو المكتبة">
+                <span>Kitab Hub</span>
+            </a>
+        </div>
+    <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+    </ul>
+</nav>
 
-        <p>
-        If you don't have an account please
-        <a href="sign up.html">Sign Up</a>
-       </p>
-       <p>
-        Already have an account?
-        <a href="login.html">Login</a>
+<section class="top">
 
-       </p>
+    <div class="left">
+        <h1>Welcome to Our<br>Online Library</h1>
+        <h2>Explore the World of Books</h2>
 
-    </center>
-       <hr>
-       <p><big>©2026 Online Library. All rights reserved </big></p>
-    </body>
+        <form>
+            <input type="text" id="search" placeholder="Search for books">
+            <input type="submit" value="Search">
+        </form>
+
+        <p id="result"></p>
+
+        <div class="account-links">
+            <span>If you don't have an account please <a href="signup.html">Sign Up</a></span>
+            <span>Already have an account? <a href="login.html">Login</a></span>
+        </div>
+    </div>
+
+</section>
+
+<hr>
+
+<section class="bottom">
+
+    <div class="bottom-label">
+        <h2>Why<br>Choose Us?</h2>
+    </div>
+
+    <div class="features">
+        <h3>Library Features</h3>
+        <p>- Browse a wide range of books</p>
+        <p>- View detailed info about each book</p>
+        <p>- Borrow books easily</p>
+        <p>- Access the library anytime online</p>
+    </div>
+
+    <div class="about">
+        <h3>About Us</h3>
+        <p>This is a digital Library website that provides a wide collection of books
+        in different categories such as programming, science, literature, and more.
+        Users can easily browse books, read their details, and borrow them online.
+        Our goal is to make reading easier and more accessible for everyone.</p>
+    </div>
+
+</section>
+
+<hr>
+
+<footer class="footer">
+    <p>©2026 Online Library. All rights reserved</p>
+</footer>
+
+</body>
 </html>

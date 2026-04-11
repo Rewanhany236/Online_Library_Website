@@ -6,31 +6,45 @@ let bookId = params.get("id");
 let bookIndex = books.findIndex(b => b.id == bookId);
 let book = books[bookIndex];
 
-if (!book) {
-    alert("Sorry , this book is not found");
-    window.location.href = "books.html";
+let nameInput = document.getElementById("book-name");
+let idInput = document.getElementById("ID");
+let authorInput = document.getElementById("Author");
+let categoryInput = document.getElementById("Category");
+let descriptionInput = document.getElementById("Description");
+let doneBtn = document.getElementById("Done-btn");
+
+if (book) {
+    nameInput.value = book.title || ""; 
+    idInput.value = book.id || "";
+    authorInput.value = book.author || "";
+    categoryInput.value = book.category || "";
+    descriptionInput.value = book.description || "";
 } else {
-    document.getElementById("book-name").value = book.title || ""; 
-    document.getElementById("ID").value        = book.id || "";
-    document.getElementById("Author").value    = book.author || "";
-    document.getElementById("Category").value  = book.category || "";
-    document.getElementById("Description").value = book.description || "";
+    nameInput.value = "";
+    idInput.value = "";
+    authorInput.value = "";
+    categoryInput.value = "";
+    descriptionInput.value = "";
+
+    doneBtn.disabled = true; 
 }
 
-/*-----------------------------------------------------------*/
-
-document.getElementById("Done-btn").addEventListener("click", function (e) {
+doneBtn.addEventListener("click", function (e) {
     e.preventDefault(); 
 
-    books[bookIndex].title       = document.getElementById("book-name").value;
-    books[bookIndex].author      = document.getElementById("Author").value;
-    books[bookIndex].category    = document.getElementById("Category").value;
-    books[bookIndex].description = document.getElementById("Description").value;
+    if (bookIndex === -1) {
+        alert("No book found to update!");
+        return;
+    }
 
-    
+    books[bookIndex].title = nameInput.value;
+    books[bookIndex].author = authorInput.value;
+    books[bookIndex].category = categoryInput.value;
+    books[bookIndex].description = descriptionInput.value;
+
     localStorage.setItem("books", JSON.stringify(books));
 
     alert("Book info is updated :)");
-
+    
     window.location.href = "books.html";
 });
