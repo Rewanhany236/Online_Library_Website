@@ -1,37 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Profile</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+let currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 
-<body>
+if (!currentUser) {
+    alert("Please login first");
+    window.location.href = "login.html";
+}
 
-<h1 class="profile-title">My Profile</h1>
+// 
+function loadProfile() {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-<div class="profile-container">
-    <div class="profile-card">
+    let user = users.find(u => u.id === currentUser.id);
 
-        <h2 id="welcome"></h2>
+    if (!user) return;
 
-       
-        <p><strong>Username:</strong> <span id="username"></span></p>
-        <p><strong>Email:</strong> <span id="email"></span></p>
-        <p><strong>Role:</strong> <span id="role"></span></p>
+    document.getElementById("welcome").innerText = "Welcome " + user.name;
+    document.getElementById("username").innerText = user.name;
+    document.getElementById("email").innerText = user.email;
+    document.getElementById("role").innerText = user.role;
+}
 
-        
-        <label>New Password</label>
-        <input type="password" id="newPassword" placeholder="Enter new password">
 
-        <button class="btn" onclick="changePassword()">Change Password</button>
+function changePassword() {
+    let newPass = document.getElementById("newPassword").value.trim();
 
-        <button class="btn" onclick="logout()">Logout</button>
+    if (newPass.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+    }
 
-    </div>
-</div>
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-<script src="profile.js"></script>
+    let index = users.findIndex(u => u.id === currentUser.id);
 
-</body>
-</html>
+    if (index === -1) {
+        alert("User not found");
+        return;
+    }
+
+    users[index].password = newPass;
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Password updated successfully!");
+
+    document.getElementById("newPassword").value = "";
+}
+
+// 
+
+loadProfile();
