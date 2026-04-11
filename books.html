@@ -1,104 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 
 <head>
-<title>Books</title>
-<link rel="stylesheet" href="CSS/style.css">
+    <meta charset="UTF-8">
+    <title>Books - مكتبة المكتبة</title>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 
 <body>
-    
- <!--how borrowed books, editbook add book appear for a someone just viewing the site?! -->
- <!--edit book, add book for admin ONLY, the navigation bar has to be dynamic enoguh to wheather show these pages-->
- <!--depending on the status of the user-->
 
+    <nav class="navbar">
+        <div class="nav-right">
+            <a href="books.html" class="logo-container">
+                <img src="images/read.png" alt="لوجو المكتبة">
+                <span>مكتبة المكتبه</span>
+            </a>
+        </div>
 
- <nav class="navbar">
-    <div class="nav-right">
-        <a href="books.html" class="logo-container">
-    <img src="images/read.png" alt="لوجو المكتبة">
-    <span>مكتبة المكتبه</span>
-    </a>
-</div>
+        <div class="nav-search">
+            <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
+            <button type="submit">🔍</button>
+        </div>
 
-<div class="nav-search">
-    <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
-    <button type="submit">🔍</button>
-</div>
+        <div class="nav-left">
+            <a href="home.html">Home</a>
+            <a href="books.html">Books</a>
 
-<div class="nav-left">
-<a href="home.html">Home</a>    
-<a href="books.html">Books</a> 
+            <span id="admin-links" style="display: none;">
+                <a href="addbook.html">Add Book</a>
+            </span>
 
-<span id="admin-links" style="display: none;">
-    <a href="addbook.html">Add Book</a>
-    <a href="editbook.html">Edit Book</a>
+            <span id="auth-links">
+                <a href="signup.html">Sign Up</a>
+                <a href="login.html">Login</a>
+            </span>
 
-</span>
+            <span id="profile-links" style="display: none;">
+                <a href="profile.html">Profile</a>
+                <a href="login.html" id="logout-btn">Logout</a>
+            </span>
+        </div>
+    </nav>
 
-<span id="user-links" style="display: none;">
-        <a href="borrowed-books.html">Borrowed Books</a> 
-    </span>
-<a href="signup.html">Sign Up</a> 
-<a href="login.html">Login</a>
+    <h1>
+        <center>Available Books</center>
+    </h1>
+
+    <div class="books-container">
+        
+        <div class="book-card">
+            <a href="books-details.html?id=1">
+                <img src="images/clean-code.jpg" alt="Clean Code" class="book-img">
+            </a>
+            <h3>Clean Code</h3>
+            <p>By Robert Martin</p>
+            <p class="status">Available</p>
+            <div class="actions">
+                <button class="user-only btn" style="display: none;">Borrow</button>
+                
+                <div class="admin-only" style="display: none;">
+                    <a href="editbook.html?id=1"><button class="btn edit-btn">Edit</button></a>
+                    <button class="btn delete-btn" onclick="deleteBook(1)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-card">
+            <a href="books-details.html?id=2">
+                <img src="images/atomic-habits.jpg" alt="Atomic Habits" class="book-img">
+            </a>
+            <h3>Atomic Habits</h3>
+            <p>By James Clear</p>
+            <p class="status">Available</p>
+            <div class="actions">
+                <button class="user-only btn" style="display: none;">Borrow</button>
+                <div class="admin-only" style="display: none;">
+                    <a href="editbook.html?id=2"><button class="btn edit-btn">Edit</button></a>
+                    <button class="btn delete-btn" onclick="deleteBook(2)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-card">
+            <a href="books-details.html?id=3">
+                <img src="images/Algorithm Design.jpg" alt="Algorithm Design" class="book-img">
+            </a>
+            <h3>Algorithm Design</h3>
+            <p>By Tomas H. Cormen</p>
+            <p class="status">Available</p>
+            <div class="actions">
+                <button class="user-only btn" style="display: none;">Borrow</button>
+                <div class="admin-only" style="display: none;">
+                    <a href="editbook.html?id=3"><button class="btn edit-btn">Edit</button></a>
+                    <button class="btn delete-btn" onclick="deleteBook(3)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-card">
+            <a href="books-details.html?id=4">
+                <img src="images/matilda.jpg" alt="Matilda" class="book-img">
+            </a>
+            <h3>Matilda</h3>
+            <p>By Roald Dahl</p>
+            <p class="status">Available</p>
+            <div class="actions">
+                <button class="user-only btn" style="display: none;">Borrow</button>
+                <div class="admin-only" style="display: none;">
+                    <a href="editbook.html?id=4"><button class="btn edit-btn">Edit</button></a>
+                    <button class="btn delete-btn" onclick="deleteBook(4)">Delete</button>
+                </div>
+            </div>
+        </div>
+
     </div>
-</nav>
 
-
-<h1><center>Available Books</center></h1>
-<div class="books-container">
-<div class="book-card">
-    <a href="books-details.html?id=1">
-        <img src="images/clean-code.jpg" alt="Clean Code" class="book-img">
-    </a>
-    <h3>Clean Code</h3>
-    <p>By Robert Martin</p> <p class="status">Available</p> <div class="actions">
-        <button class="user-only btn" style="display: none;">Borrow</button>
-        <span class="admin-only" style="display: none;">
-            <a href="editbook.html?id=1"><button class="btn">Edit</button></a>
-        </span>
-    </div>
-</div>
-
-<div class="book-card">
-    <a href="books-details.html?id=2">
-        <img src="images/atomic-habits.jpg" alt="Atomic Habits" class="book-img">
-    </a>
-    <h3>Atomic Habits</h3>
-    <p>By James Clear</p> <p class="status">Available</p> <div class="actions">
-        <button class="user-only btn" style="display: none;">Borrow</button>
-        <span class="admin-only" style="display: none;">
-            <a href="editbook.html?id=2"><button class="btn">Edit</button></a>
-        </span>
-    </div>
-    </div>
-
-    <div class="book-card">
-    <a href="books-details.html?id=3">
-        <img src="images/Algorithm Design.jpg" alt="Algorithm Design" class="book-img">
-    </a>
-    <h3>Algorithm Design</h3>
-    <p>By tomas H. Comen</p> <p class="status">Available</p> <div class="actions">
-        <button class="user-only btn" style="display: none;">Borrow</button>
-        <span class="admin-only" style="display: none;">
-            <a href="editbook.html?id=2"><button class="btn">Edit</button></a>
-        </span>
-    </div>
-</div>
-
-<div class="book-card">
-    <a href="books-details.html?id=4">
-        <img src="images/matilda.jpg" alt="Matilda" class="book-img">
-    </a>
-    <h3>Matilda</h3>
-    <p>By Roald Dahl</p> <p class="status">Available</p> <div class="actions">
-        <button class="user-only btn" style="display: none;">Borrow</button>
-        <span class="admin-only" style="display: none;">
-            <a href="editbook.html?id=2"><button class="btn">Edit</button></a>
-        </span>
-    </div>
-</div>
-
+    <script src="Js/books.js"></script>
+     <script src="Js/logout.js"></script>
 </body>
 
 </html>

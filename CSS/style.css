@@ -331,7 +331,7 @@ small, .guest-only {
     text-decoration: underline;
 }
 
-.book-card{
+.book-card {
     background-color:#e6e0dc ;
     border: 2px solid #a78d78;
     border-radius: 15px;
@@ -340,7 +340,9 @@ small, .guest-only {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     text-align: center;
     transition: all 0.3s ease;
-    flex: 0 1 250px; 
+    display: flex;            
+    flex-direction: column;    
+    justify-content: space-between;
 }
 
 .book-card h3 {
