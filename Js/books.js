@@ -39,7 +39,9 @@ function borrowBook(bookId) {
         return;
     }
 
-    if (book && book.status && book.status.toLowerCase() === "available") {
+    //if (book && book.status && book.status.toLowerCase() === "available") {
+if (book && (!book.status || book.status.toLowerCase() === "available")) {
+    
         book.status = "Borrowed";
         book.borrowedBy = currentUser.username;   // ← this is critical
         book.borrowedDate = new Date().toISOString().slice(0,10);
