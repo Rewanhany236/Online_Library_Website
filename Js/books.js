@@ -45,11 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
 function deleteBook(id) {
     const confirmDelete = confirm("Are you certain that you want to delete this book?");
 
     if (confirmDelete) {
+        let books = JSON.parse(localStorage.getItem("books")) || [];
+
+        books = books.filter(book => book.id !== id);
+
+        localStorage.setItem("books", JSON.stringify(books));
+
         alert("Book with id: " + id + " is deleted successfully");
+
+        location.reload();
     }
 }
