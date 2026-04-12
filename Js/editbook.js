@@ -1,9 +1,9 @@
 let books = JSON.parse(localStorage.getItem("books")) || [];
 
 let params = new URLSearchParams(window.location.search);
-let bookId = params.get("id");
+let bookId = Number(params.get("id")); 
 
-let bookIndex = books.findIndex(b => b.id == bookId);
+let bookIndex = books.findIndex(b => b.id === bookId);
 let book = books[bookIndex];
 
 let nameInput = document.getElementById("book-name");
