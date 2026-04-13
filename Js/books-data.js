@@ -47,3 +47,4 @@ const books = [
 if (!localStorage.getItem("books")) {
     localStorage.setItem("books", JSON.stringify(books));
 }
+console.log("books-data.js loaded, books =", books);

@@ -1,49 +1,77 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-    <title>Add New Book - Online Library</title>
+    <title>Add book</title>
     <link rel="stylesheet" href="CSS/style.css">
-
+</head>
 <body>
-   <table width="100%">
-    <tr>
-        <td>
-            <a href="home.html">Home</a> &nbsp; | &nbsp;
-            <a href="books.html">View Books</a> 
-        </td>
 
-        <td align="right">
-            <a href="login.html">Logout</a>
-        </td>
-    </tr>
-</table>
-    
-    <hr>
-    <h2>Add New Book</h2>
-    <form action="#" method="post">
-        <div>
-            <lable for="book-name">Book Name:</lable>
-            <input type="text" id="book-name" name="book-name" required>
+<nav class="navbar">
+    <div class="nav-right">
+        <a href="books.html" class="logo-container">
+            <img src="images/read.png" alt="لوجو المكتبة">
+            <span>مكتبة المكتبه</span>
+        </a>
+    </div>
+
+    <div class="nav-search">
+        <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
+        <button type="submit">🔍</button>
+    </div>
+
+    <div class="nav-left">
+        <a href="home.html">Home</a>    
+        <a href="books.html">Books</a> 
+      
+        <span id="adminAddBookLink" style="display: none;">
+            <a href="addbook.html">Add Book</a>
+        </span>
+        <a href="profile.html">Profile</a>
+        <a href="login.html" id="logout-btn">Logout</a>
+    </div>
+</nav>
+
+<h1><center>Add Book</center></h1>
+<br>
+<div class="library-form-container">
+    <form>
+        <div class="form-group">
+            <label>Book Name:</label> 
+            <input type="text" class="form-control" id="book-name" name="book-name" required> <br><br>
+
+            <label> ID:</label>  
+            <input type="text" class="form-control" id="ID" name="ID" required><br><br>
+
+            <label> Author:</label>  
+            <input type="text" class="form-control" id="Author" name="Author" required> <br><br> 
+
+            <label>Wikipedia Link: (If available)</label>
+            <input type="text" class="form-control" id="wikipediaLink" name="wikipediaLink"><br><br>
+
+            <label> Category:</label>  
+            <input type="text" class="form-control" id="Category" name="Category" required><br><br>
+
+            <label> Description: </label>  
+            <input type="text" class="form-control" id="Description" name="Description" required><br><br>
+
+            <label>Image:</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*" required><br><br>
         </div>
-         <div>
-            <lable for="book-id">Book ID:</lable>
-            <input type="text" id="book-id" name="book-id" required>
-        </div>
-        <div>
-            <lable for="Author"> Author:</lable>
-            <input type="text" id="Author" name="Author" required>
-        </div>
-        <div>
-            <lable for="Category"> Category:</label>
-                <input type="text" id="Category" name="Category" required>
-        </div>
-        <div>
-            <lable for="Description"> Description: </label>
-                <input type="text" id="Description" name="Description" required>
-        </div>
-        <button type="submit">Add Book</button>
-        <a href="books.html" class="cancel">Cancel</a>
+        <button class="btn" type="submit" id="Done-btn">Done</button>   
+        <button class="btn" type="button" id="cancel-btn" onclick="window.location.href='books.html'">Cancel</button>
     </form>
-</body>
+</div>
 
+<script src="js/logout.js"></script>
+<script src="js/addbook.js"></script>
+<script>
+
+    const userRole = localStorage.getItem('userRole') || 'guest';  
+
+  
+    if (userRole === 'admin') {
+        document.getElementById('adminAddBookLink').style.display = 'inline';
+    }
+</script>
+</body>
 </html>

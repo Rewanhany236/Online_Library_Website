@@ -506,106 +506,99 @@ small, .guest-only {
 }
 /* ========== PROFILE PAGE ========== */
 
-.profile-title {
-    text-align: center;
-    color: #2D1C1E;
-    margin-top: 40px;
-    font-size: 34px; /* كبرنا العنوان */
-    font-weight: 800;
-}
+/* ========== PROFILE PAGE ========== */
 
-/* الكونتينر */
-.profile-container {
+.profile-page {
+    max-width: 600px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profile-card,
+.books-card {
+    background-color: #EFE9DF;
+    border-radius: 20px;
+    border: 1px solid var(--color-base);
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.profile-card h2,
+.books-card h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-highlight);
+}
+
+.profile-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    display: flex;
     align-items: center;
-    margin-top: 50px;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0 auto 1rem;
 }
 
-/* الكارد */
-.profile-card {
-    background: linear-gradient(135deg, #EFE9DF, #E1D4C2);
-    width: 480px; /* أكبر */
-    padding: 40px; /* مريح */
-    border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+.profile-field {
+    background-color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border-left: 4px solid var(--color-accent);
+    margin-bottom: 10px;
+}
+
+.profile-field label {
+    font-size: 11px;
+    color: var(--color-base);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 2px;
+    font-weight: 600;
+}
+
+.profile-field span {
+    font-size: 14px;
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.account-badge {
+    display: inline-block;
+    background-color: var(--color-highlight);
+    color: var(--color-accent);
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.empty-state {
     text-align: center;
-    transition: 0.3s;
+    padding: 2.5rem 1rem;
+    color: var(--color-base);
+    font-size: 14px;
 }
 
-.profile-card:hover {
-    transform: translateY(-5px);
+.empty-state .empty-icon {
+    font-size: 36px;
+    margin-bottom: 0.75rem;
+    opacity: 0.4;
 }
 
-/* الترحيب */
-#welcome {
-    font-size: 22px;
-    color: #6E4F3E;
-    margin-bottom: 20px;
-}
-
-/* بيانات المستخدم */
-.profile-card p {
-    background: #ffffff;
-    padding: 14px;
-    border-radius: 12px;
-    margin: 12px 0;
-    font-size: 16px;
-    color: #3e2723;
-    text-align: left;
-    border-left: 5px solid #6E4F3E; /* لمسة بني */
-}
-
-/* الباسورد */
-.profile-card input {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border-radius: 12px;
-    border: 1px solid #A78D78;
-    font-size: 15px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.profile-card input:focus {
-    border-color: #6E4F3E;
-    box-shadow: 0 0 8px rgba(110,79,62,0.3);
-}
-
-/* الأزرار */
-.btn {
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    border-radius: 30px;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* زر تغيير الباسورد */
-.btn:first-of-type {
-    background-color: #6E4F3E;
-    color: white;
-}
-
-.btn:first-of-type:hover {
-    background-color: #2D1C1E;
-}
-
-
-
-.btn:last-of-type:hover {
-    background-color: #A78D78;
-}
-
-/* موبايل */
-@media (max-width: 500px) {
-    .profile-card {
-        width: 90%;
-        padding: 25px;
+@media (max-width: 640px) {
+    .profile-page {
+        padding: 0 1rem;
     }
 }

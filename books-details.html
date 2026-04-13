@@ -5,88 +5,118 @@
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <table width="100%">
-         <tr>
-             <td>
-                <a href="home.html">Home</a> &nbsp; | &nbsp;
-                <a href="books.html">View Books</a> &nbsp; | &nbsp;
-                <a href="login.html">Login</a> &nbsp; | &nbsp;
-                <a href="signup.html">Sign Up</a>
-             </td>
-            <td align="right">
-                <a href="login.html">Logout</a>
-             </td>
-         </tr>
-    </table>
-    <hr>
-    
-    <div id="book-details">
-        <p>Loading book details...</p>
+
+<nav class="navbar">
+    <div class="nav-right">
+        <a href="books.html" class="logo-container">
+            <img src="images/read.png" alt="لوجو المكتبة">
+            <span>Kitab Hub</span>
+        </a>
     </div>
-    <button id="borrowBtn" style="display: none;">Borrow</button>
-    <div id="adminActions" style="display: none;">
-        <button id="editBtn">Edit</button>
-        <button id="deleteBtn">Delete</button>
+
+    <div class="nav-left">
+        <a href="home.html">Home</a>
+        <a href="books.html">Books</a>
+
+        <span id="guest-links">
+            <a href="signup.html">Sign Up</a>
+            <a href="login.html">Login</a>
+        </span>
+
+        <span id="user-links" style="display: none;">
+            <a href="profile.html">Profile</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </span>
     </div>
-    <script src="books-data.js"></script>
+</nav>
 
-    <script>
-        const currentUserRole = 'user';   
-        const urlParams = new URLSearchParams(window.location.search);
-        const bookId = urlParams.get('id');
-        const book = books.find(b => b.id == bookId);  
-        const detailsContainer = document.getElementById('book-details');
+<div id="book-details">
+    <p>Loading book details...</p>
+</div>
 
-        if (!book) {
-            detailsContainer.innerHTML = '<p style="color: red;">Book not found. Please go back and try again.</p>';
-        } else {
-            // New layout with image first
-            let detailsHTML = `
-                <div class="book-detail-layout">
-                    <div class="book-image-area">
-                        ${book.imageUrl ? `<img src="${book.imageUrl}" alt="${book.title} cover" class="book-cover">` : '<div class="no-image">No image available</div>'}
-                    </div>
-                    <div class="book-info-area">
-                        <h2>${book.title}</h2>
-                        <p><strong>Author:</strong> ${book.author}</p>
-                        <p><strong>Category:</strong> ${book.category || '—'}</p>
-                        <p><strong>Status:</strong> ${book.status || 'Available'}</p>
-                        <p><strong>Description:</strong> ${book.description || 'No description available.'}</p>
-                        ${book.authorWikipedia ? `<p><strong>More about the author:</strong> <a href="${book.authorWikipedia}" target="_blank">Wikipedia</a></p>` : ''}
-                    </div>
-                </div>
-            `;
-            detailsContainer.innerHTML = detailsHTML;
-
-            const borrowBtn = document.getElementById('borrowBtn');
-            const adminActions = document.getElementById('adminActions');
-            if (currentUserRole === 'admin') {
-                adminActions.style.display = 'block';
-            }
-            else if (currentUserRole === 'user' && book.status && book.status.toLowerCase() === 'available') {
-                borrowBtn.style.display = 'inline-block';
-            }
-            borrowBtn.onclick = () => {
-                alert(`Borrowing "${book.title}" – This would update the book's status in a real system.`);
-            };
-
-            const editBtn = document.getElementById('editBtn');
-            const deleteBtn = document.getElementById('deleteBtn');
-
-            if (editBtn) {
-                editBtn.onclick = () => {
-                    alert(`Edit "${book.title}" – Redirect to edit page or open a form.`);
-                };
-            }
-
-            if (deleteBtn) {
-                deleteBtn.onclick = () => {
-                    if (confirm(`Are you sure you want to delete "${book.title}"?`)) {
-                        alert(`Deleting "${book.title}" – This would remove it from the database.`);
-                    }
-                };
+<script src="../js/books-data.js"></script>
+<script>
+    function initLocalStorage() {
+        if (!localStorage.getItem('books')) {
+            if (typeof books !== 'undefined' && Array.isArray(books)) {
+                localStorage.setItem('books', JSON.stringify(books));
+            } else {
+                localStorage.setItem('books', JSON.stringify([]));
             }
         }
-    </script>
+    }
+
+    function getBooks() {
+        return JSON.parse(localStorage.getItem('books')) || [];
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function updateNavbar() {
+        const userRole = localStorage.getItem('userRole');
+        const guestLinks = document.getElementById('guest-links');
+        const userLinks = document.getElementById('user-links');
+
+        if (userRole === 'admin' || userRole === 'user') {
+            if (guestLinks) guestLinks.style.display = 'none';
+            if (userLinks) userLinks.style.display = 'inline';
+        } else {
+            if (guestLinks) guestLinks.style.display = 'inline';
+            if (userLinks) userLinks.style.display = 'none';
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('userRole');
+        window.location.href = 'login.html';
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookId = urlParams.get('id');
+    const detailsContainer = document.getElementById('book-details');
+
+    initLocalStorage();
+    const booksArray = getBooks();
+    const book = booksArray.find(b => b.id == bookId);
+
+    if (!book) {
+        detailsContainer.innerHTML = '<p style="color: red;">Book not found. Please go back and try again.</p>';
+    } else {
+        let detailsHTML = `
+            <div class="book-detail-layout">
+                <div class="book-image-area">
+                    ${book.imageUrl ? `<img src="${book.imageUrl}" alt="${book.title} cover" class="book-cover">` : '<div class="no-image">No image available</div>'}
+                </div>
+                <div class="book-info-area">
+                    <h2>${escapeHtml(book.title)}</h2>
+                    <p><strong>Author:</strong> ${escapeHtml(book.author)}</p>
+                    <p><strong>Category:</strong> ${escapeHtml(book.category || '—')}</p>
+                    <p><strong>Status:</strong> ${escapeHtml(book.status || 'Available')}</p>
+                    <p><strong>Description:</strong> ${escapeHtml(book.description || 'No description available.')}</p>
+                    ${book.authorWikipedia ? `<p><strong>More about the author:</strong> <a href="${escapeHtml(book.authorWikipedia)}" target="_blank">Wikipedia</a></p>` : ''}
+                </div>
+            </div>
+        `;
+        detailsContainer.innerHTML = detailsHTML;
+    }
+
+    updateNavbar();
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            logout();
+        });
+    }
+</script>
 </body>
 </html>

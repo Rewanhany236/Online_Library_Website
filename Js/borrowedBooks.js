@@ -1,58 +1,21 @@
-function displayBorrowedBooks(bookList = null) {
-    const container = document.getElementById("borrowedBooksContainer");
-    if (!container) return;
+function borrowBook(bookId) {
+    let books = getBooks();
+    const book = books.find(b => b.id == bookId);
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    let borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks")) || [];
-
-    if (bookList) {
-        borrowedBooks = bookList;
-    }
-
-    container.innerHTML = "";
-
-    if (borrowedBooks.length === 0) {
-        container.innerHTML = `
-            <p style="text-align:center; font-size: 18px;">No borrowed books yet.</p>
-        `;
+    if (!currentUser) {
+        alert("You must be logged in to borrow a book.");
         return;
     }
 
-    borrowedBooks.forEach(book => {
-        const card = document.createElement("div");
-        card.classList.add("book-card");
-
-        card.innerHTML = `
-            <img src="${book.imageUrl}" alt="${book.title}" class="book-img">
-            <h3>${book.title}</h3>
-            <p>By ${book.author}</p>
-            <p><strong>Category:</strong> ${book.category}</p>
-            <p><strong>Borrow Date:</strong> ${book.borrowDate}</p>
-            <div class="actions">
-                <button class="btn" disabled>Borrowed</button>
-            </div>
-        `;
-
-        container.appendChild(card);
-    });
+    if (book && book.status && book.status.toLowerCase() === "available") {
+        book.status = "Borrowed";
+        book.borrowedBy = currentUser.username;   // store who borrowed it
+        book.borrowedDate = new Date().toISOString().slice(0,10); // optional
+        saveBooks(books);
+        alert(`You have borrowed "${book.title}".`);
+        renderBooks();  // refresh the listing
+    } else {
+        alert("This book is not available for borrowing.");
+    }
 }
-
-function setupBorrowedSearch() {
-    const searchInput = document.getElementById("borrowedSearchInput");
-    if (!searchInput) return;
-
-    searchInput.addEventListener("input", function () {
-        const searchValue = searchInput.value.toLowerCase();
-
-        let borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks")) || [];
-
-        const filteredBooks = borrowedBooks.filter(book =>
-            book.title.toLowerCase().includes(searchValue) ||
-            book.author.toLowerCase().includes(searchValue)
-        );
-
-        displayBorrowedBooks(filteredBooks);
-    });
-}
-
-displayBorrowedBooks();
-setupBorrowedSearch();

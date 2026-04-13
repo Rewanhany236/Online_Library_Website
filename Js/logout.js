@@ -1,5 +1,6 @@
 function logout() {
-    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("userRole");
     window.location.href = "login.html";
 }
 

@@ -2,65 +2,166 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <title>My Profile - Kitab Hub</title>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
-
 <body>
+
 <nav class="navbar">
     <div class="nav-right">
-        <a href="books.html" class="logo-container"></a>
-    <img src="images/read.png" alt="لوجو المكتبة">
-    <span>مكتبة المكتبه</span>
-</div>
-
-<div class="nav-search">
-    <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
-    <button type="submit">🔍</button>
-</div>
-
-<div class="nav-left">
-<a href="home.html">Home</a>    
-<a href="books.html">Books</a> 
-
-<span id="admin-links" style="display: none;">
-    <a href="addbook.html">Add Book</a>
-    <a href="editbook.html">Edit Book</a>
-
-</span>
-
-<span id="user-links" style="display: none;">
-        <a href="borrowed-books.html">Borrowed Books</a> 
-    </span>
-<a href="signup.html">Sign Up</a> 
-<a href="login.html">Login</a>
+        <a href="books.html" class="logo-container">
+            <img src="images/read.png" alt="Logo">
+            <span>Kitab Hub</span>
+        </a>
+    </div>
+    <div class="nav-search">
+        <input type="text" id="searchInput" placeholder="Search books...">
+        <button id="searchBtn">🔍</button>
+    </div>
+    <div class="nav-left">
+        <a href="home.html">Home</a>
+        <a href="books.html">Books</a>
+        <span id="admin-links" style="display: none;"><a href="addbook.html">Add Book</a></span>
+        <span id="auth-links"><a href="signup.html">Sign Up</a> <a href="login.html">Login</a></span>
+        <span id="profile-links" style="display: none;"><a href="profile.html">Profile</a> <a href="#" id="logout-btn">Logout</a></span>
     </div>
 </nav>
-    
-<h1 class="profile-title">My Profile</h1>
 
-<div class="profile-container">
+<div class="profile-page">
+
     <div class="profile-card">
-
-        <h2 id="welcome"></h2>
-
-        
-        <p><strong>Username:</strong> <span id="username"></span></p>
-        <p><strong>Email:</strong> <span id="email"></span></p>
-        <p><strong>Role:</strong> <span id="role"></span></p>
-
-        
-        <label>New Password</label>
-        <input type="password" id="newPassword" placeholder="Enter new password">
-
-        <button class="btn" onclick="changePassword()">Change Password</button>
-
-        <button class="btn" onclick="logout()">Logout</button>
-
+        <h2>My Profile</h2>
+        <div class="profile-avatar" id="avatar-initials">?</div>
+        <div id="user-info"></div>
     </div>
+
+    <div class="books-card">
+        <h2>Books I Have Borrowed</h2>
+        <div id="borrowed-books" class="books-container"></div>
+    </div>
+
 </div>
 
-<script src="Js/profile.js"></script>
+<script src="js/books-data.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/books.js"></script>
+<script>
+    (function() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser) {
+            alert("Please log in to view your profile.");
+            window.location.href = "login.html";
+            return;
+        }
 
+        const avatarEl = document.getElementById("avatar-initials");
+        if (avatarEl && currentUser.username) {
+            avatarEl.textContent = currentUser.username.charAt(0).toUpperCase();
+        }
+
+        const userInfoDiv = document.getElementById("user-info");
+        userInfoDiv.innerHTML = `
+            <div class="profile-field">
+                <label>Username</label>
+                <span>${escapeHtml(currentUser.username)}</span>
+            </div>
+            <div class="profile-field">
+                <label>Email</label>
+                <span>${escapeHtml(currentUser.email)}</span>
+            </div>
+            <div class="profile-field">
+                <label>Account Type</label>
+                <span class="account-badge">${currentUser.type === 'admin' ? 'Administrator' : 'Regular User'}</span>
+            </div>
+        `;
+
+        function getBooks() {
+            return JSON.parse(localStorage.getItem("books")) || [];
+        }
+
+        function saveBooks(books) {
+            localStorage.setItem("books", JSON.stringify(books));
+        }
+
+        function renderBorrowedBooks() {
+            const allBooks = getBooks();
+            const borrowed = allBooks.filter(book =>
+                book.status && book.status.toLowerCase() === "borrowed" &&
+                book.borrowedBy === currentUser.username
+            );
+            const container = document.getElementById("borrowed-books");
+            if (!container) return;
+
+            if (borrowed.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📚</div>
+                        <p>You haven't borrowed any books yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = "";
+            borrowed.forEach(book => {
+                const imageUrl = book.imageUrl || "images/default-book.jpg";
+                html += `
+                    <div class="book-card" data-id="${book.id}">
+                        <img src="${imageUrl}" alt="${book.title}" class="book-img" onerror="this.src='images/default-book.jpg'">
+                        <h3>${escapeHtml(book.title)}</h3>
+                        <p>By ${escapeHtml(book.author)}</p>
+                        <p class="status status-borrowed">Borrowed on: ${book.borrowedDate || "unknown date"}</p>
+                        <div class="actions">
+                            <button class="btn return-btn" data-id="${book.id}">Return Book</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+
+            document.querySelectorAll(".return-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const bookId = parseInt(btn.dataset.id);
+                    returnBook(bookId);
+                });
+            });
+        }
+
+        function returnBook(bookId) {
+            if (confirm("Return this book? It will become available for others.")) {
+                let books = getBooks();
+                const book = books.find(b => b.id === bookId);
+                if (book && book.borrowedBy === currentUser.username) {
+                    book.status = "Available";
+                    delete book.borrowedBy;
+                    delete book.borrowedDate;
+                    saveBooks(books);
+                    alert(`"${book.title}" has been returned.`);
+                    renderBorrowedBooks();
+                } else {
+                    alert("Unable to return this book.");
+                }
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+        }
+
+        renderBorrowedBooks();
+
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener("click", () => {
+                window.location.href = "books.html?search=" + encodeURIComponent(searchInput.value);
+            });
+            searchInput.addEventListener("keyup", (e) => {
+                if (e.key === "Enter") window.location.href = "books.html?search=" + encodeURIComponent(searchInput.value);
+            });
+        }
+    })();
+</script>
 </body>
 </html>

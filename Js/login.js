@@ -18,6 +18,9 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
     localStorage.setItem("currentUser", JSON.stringify(user));
 
+    
+    localStorage.setItem("userRole", user.type);   // 'admin' or 'user'
+
     alert("Welcome back " + user.username + "!");
 
     window.location.href = "books.html";
