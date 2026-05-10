@@ -1,0 +1,16 @@
+# Python
+myven/
+__pycache__/
+*.pyc
+*.pyo
+
+# Django
+db.sqlite3
+staticfiles/
+
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env

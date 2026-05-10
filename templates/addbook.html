@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add book</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-right">
+        <a href="{% url 'book_list' %}" class="logo-container">
+            <img src="{% static 'images/read.png' %}" alt="library logo">
+            <span style="color: beige;"> Kitab Hub</span>
+        </a>
+    </div>
+
+    <div class="nav-search">
+        <input type="text" placeholder="ابحث عن كتاب أو مؤلف...">
+        <button type="submit">🔍</button>
+    </div>
+
+    <div class="nav-left">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'book_list' %}">Books</a>
+
+        {% if user.is_staff %}
+        <span id="adminAddBookLink">
+            <a href="{% url 'add_book' %}">Add Book</a>
+        </span>
+        {% endif %}
+
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="#" id="logout-btn">Logout</a>
+    </div>
+</nav>
+
+<h1><center>Add Book</center></h1>
+<br>
+
+<div class="library-form-container">
+    <form id="add-book-form" enctype="multipart/form-data">
+        <div class="form-group">
+
+            <label>Book Name:</label>
+            <input type="text" class="form-control" id="book-name" name="title" required>
+            <br><br>
+
+            <label>ID:</label>
+            <input type="text" class="form-control" id="ID" name="id" required>
+            <br><br>
+
+            <label>Author:</label>
+            <input type="text" class="form-control" id="Author" name="author" required>
+            <br><br>
+
+            <label>Wikipedia Link: (If available)</label>
+            <input type="text" class="form-control" id="wikipediaLink" name="author_wikipedia">
+            <br><br>
+
+            <label>Category:</label>
+            <input type="text" class="form-control" id="Category" name="category" required>
+            <br><br>
+
+            <label>Description:</label>
+            <textarea class="form-control" id="Description" name="description" required></textarea>
+            <br><br>
+
+            <label>Image:</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+            <br><br>
+
+        </div>
+
+        <button class="btn" type="submit" id="Done-btn">Done</button>
+        <button class="btn" type="button" id="cancel-btn">Cancel</button>
+    </form>
+</div>
+
+<script src="{% static 'js/logout.js' %}"></script>
+<script src="{% static 'js/addbook.js' %}"></script>
+
+</body>
+</html>

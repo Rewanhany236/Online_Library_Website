@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Books - Kitab Hub</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-right">
+            <a href="{% url 'book_list' %}" class="logo-container">
+                <img src="{% static 'images/read.png' %}" alt="library logo">
+                <span style="color: beige;">Kitab Hub</span>
+            </a>
+        </div>
+
+        <div class="nav-search">
+            <input type="text" id="searchInput" placeholder="Search for a book or author">
+            <button type="button" id="searchBtn">🔍</button>
+        </div>
+
+        <div class="nav-left">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'book_list' %}">Books</a>
+
+            {% if user.is_staff %}
+            <span id="admin-links">
+                <a href="{% url 'add_book' %}">Add Book</a>
+            </span>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <span id="profile-links">
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </span>
+            {% else %}
+            <span id="auth-links">
+                <a href="#">Sign Up</a>
+                <a href="{% url 'login' %}">Login</a>
+            </span>
+            {% endif %}
+        </div>
+    </nav>
+
+    <h1><center>Available Books</center></h1>
+
+    <!--
+        Instead of building cards in JavaScript from localStorage,
+        Django renders them directly from the database via the view.
+        The view passes a "books" queryset to this template as context.
+    -->
+    <div class="books-container" id="booksContainer">
+        {% if books %}
+            {% for book in books %}
+            <div class="book-card" data-id="{{ book.id }}">
+
+                <a href="{% url 'book_detail' book.id %}">
+                    {% if book.image %}
+                        <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-img">
+                    {% else %}
+                        <img src="{% static 'images/default-book.jpg' %}" alt="{{ book.title }}" class="book-img">
+                    {% endif %}
+                </a>
+
+                <h3>{{ book.title }}</h3>
+                <p>By {{ book.author }}</p>
+
+                <p class="status {% if book.status == 'Available' %}status-available{% else %}status-borrowed{% endif %}">
+                    {{ book.status }}
+                </p>
+
+                <div class="actions">
+
+                    {% if user.is_authenticated and not user.is_staff and book.status == 'Available' %}
+                    <!--
+                        Borrow button: only shown to logged-in regular users
+                        when the book is available.
+                        Sends a POST to the borrow API endpoint via books.js.
+                    -->
+                    <button class="btn borrow-btn" data-id="{{ book.id }}">Borrow</button>
+                    {% endif %}
+
+                    {% if user.is_staff %}
+                    <!--
+                        Edit/Delete buttons: only shown to staff (admins).
+                        Secure — non-staff users never receive this HTML.
+                    -->
+                    <div class="admin-only">
+                        <a href="{% url 'edit_book' book.id %}">
+                            <button class="btn edit-btn">Edit</button>
+                        </a>
+                        <button class="btn delete-btn" data-id="{{ book.id }}">Delete</button>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <p style="text-align:center;">
+                No books available.
+                {% if user.is_staff %}
+                    <a href="{% url 'add_book' %}">Add one</a>.
+                {% endif %}
+            </p>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'js/logout.js' %}"></script>
+    <script src="{% static 'js/books.js' %}"></script>
+
+</body>
+</html>

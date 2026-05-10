@@ -1,0 +1,54 @@
+[
+  {
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "category": "Programming",
+      "description": "Clean Code by Robert C. Martin is an essential guide for software developers focusing on the principles and practices of writing clean, maintainable, and efficient code.",
+      "image": "images/clean-code.jpg",
+      "author_wikipedia": "https://en.wikipedia.org/wiki/Robert_C._Martin",
+      "status": "Available"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "category": "Self Development",
+      "description": "Atomic Habits by James Clear is a comprehensive guide on how to change your habits and achieve personal growth.",
+      "image": "images/atomic-habits.jpeg",
+      "author_wikipedia": "https://en.wikipedia.org/wiki/James_Clear",
+      "status": "Available"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
+      "title": "Algorithm Design",
+      "author": "Tomas H. Cormen",
+      "category": "Computer Science",
+      "description": "Algorithm Design by Tomas H. Cormen is a comprehensive textbook covering the principles and techniques of algorithm design.",
+      "image": "images/algorithm-design.jpeg",
+      "author_wikipedia": "https://en.wikipedia.org/wiki/Thomas_H._Cormen",
+      "status": "Available"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 4,
+    "fields": {
+      "title": "Matilda",
+      "author": "Roald Dahl",
+      "category": "Children's Literature",
+      "description": "Matilda by Roald Dahl is a classic children's novel about a young girl with extraordinary intelligence and telekinetic powers.",
+      "image": "images/matilda.jpeg",
+      "author_wikipedia": "https://en.wikipedia.org/wiki/Roald_Dahl",
+      "status": "Available"
+    }
+  }
+]
