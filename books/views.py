@@ -96,3 +96,12 @@ def edit_book_page(request, book_id):
     
     book = get_object_or_404(Book, id=book_id)
     return render(request, 'editbook.html', {'book': book})
+
+
+class BorrowedBooksView(LoginRequiredMixin, TemplateView):
+    template_name = 'borrowed-books.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['borrowed_books'] = self.request.user.borrowed_books.all()
+        return context

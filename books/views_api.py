@@ -131,4 +131,22 @@ def delete_book_api(request, book_id):
     except Book.DoesNotExist:
         return JsonResponse({'error': 'Book not found'}, status=404)
     
+@csrf_exempt
+@require_http_methods(["POST"])
+def borrow_book_api(request, book_id):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Login required'}, status=401)
+    try:
+        book = Book.objects.get(id=book_id)
+    except Book.DoesNotExist:
+        return JsonResponse({'error': 'Book not found'}, status=404)
     
+    if book.status != 'Available':
+        return JsonResponse({'error': 'Book is not available'}, status=400)
+    
+    from django.utils import timezone
+    book.borrowed_by = request.user
+    book.borrowed_date = timezone.now()
+    book.status = 'Borrowed'
+    book.save()
+    return JsonResponse({'message': f'"{book.title}" borrowed successfully'}, status=200)

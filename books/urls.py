@@ -10,8 +10,12 @@ urlpatterns = [
     # (add other API endpoints as needed: detail, edit, delete)
     path('api/books/<int:book_id>/', views_api.book_detail_api, name='api_book_detail'),
     path('edit-book/<int:book_id>/', views.edit_book_page, name='edit_book_page'),
-path('api/books/update/<int:book_id>/', views_api.update_book_api, name='update_book_api'),
-    path('api/books/<int:book_id>/delete/', views_api.delete_book_api, name='delete_book_api'),     # HTML page routes
+    path('api/books/update/<int:book_id>/', views_api.update_book_api, name='update_book_api'),
+    path('api/books/<int:book_id>/delete/', views_api.delete_book_api, name='delete_book_api'),   
+    path('api/books/<int:book_id>/borrow/', views_api.borrow_book_api, name='api_borrow_book'),
+    
+    # HTML page routes
+    
     path('', views.HomeView.as_view(), name='home'),
     path('books/', views.BooksView.as_view(), name='book_list'),
     path('books/add/', views.AddBookView.as_view(), name='add_book'),
@@ -22,4 +26,5 @@ path('api/books/update/<int:book_id>/', views_api.update_book_api, name='update_
     path('signup/', views.signup, name='signup'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('api/books/<int:book_id>/return/', views_api.return_book_api, name='api_return_book'),
+    path('borrowed/', views.BorrowedBooksView.as_view(), name='borrowed_books'),
 ]
