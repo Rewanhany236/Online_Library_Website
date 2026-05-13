@@ -86,3 +86,49 @@ def return_book_api(request, book_id):
     book.status = 'Available'
     book.save()
     return JsonResponse({'message': f'"{book.title}" returned successfully'}, status=200)
+
+# PUT /api/books/update/<id>/ – update a book
+@csrf_exempt
+@require_http_methods(["PUT", "POST"])
+def update_book_api(request, book_id):
+    try:
+        book = Book.objects.get(id=book_id)
+    except Book.DoesNotExist:
+        return JsonResponse({'error': 'Book not found'}, status=404)
+    
+    # Handle form data from editbook.js
+    book.title = request.POST.get('title', book.title)
+    book.author = request.POST.get('author', book.author)
+    book.category = request.POST.get('category', book.category)
+    book.description = request.POST.get('description', book.description)
+    book.author_wikipedia = request.POST.get('author_wikipedia', book.author_wikipedia)
+    book.status = request.POST.get('status', book.status)
+    
+    if request.FILES.get('image'):
+        # Delete old image if exists
+        if book.image:
+            import os
+            if os.path.isfile(book.image.path):
+                os.remove(book.image.path)
+        book.image = request.FILES['image']
+    
+    book.save()
+    return JsonResponse({'success': True, 'message': 'Book updated successfully'})
+
+# DELETE /api/books/delete/<id>/ – delete a book
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_book_api(request, book_id):
+    try:
+        book = Book.objects.get(id=book_id)
+        # Delete image file if exists
+        if book.image:
+            import os
+            if os.path.isfile(book.image.path):
+                os.remove(book.image.path)
+        book.delete()
+        return JsonResponse({'success': True, 'message': 'Book deleted successfully'})
+    except Book.DoesNotExist:
+        return JsonResponse({'error': 'Book not found'}, status=404)
+    
+    

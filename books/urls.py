@@ -8,8 +8,10 @@ urlpatterns = [
     path('api/books/', views_api.book_list_api, name='api_book_list'),
     path('api/books/add/', views_api.add_book_api, name='api_add_book'),
     # (add other API endpoints as needed: detail, edit, delete)
-
-    # HTML page routes
+    path('api/books/<int:book_id>/', views_api.book_detail_api, name='api_book_detail'),
+    path('edit-book/<int:book_id>/', views.edit_book_page, name='edit_book_page'),
+path('api/books/update/<int:book_id>/', views_api.update_book_api, name='update_book_api'),
+    path('api/books/<int:book_id>/delete/', views_api.delete_book_api, name='delete_book_api'),     # HTML page routes
     path('', views.HomeView.as_view(), name='home'),
     path('books/', views.BooksView.as_view(), name='book_list'),
     path('books/add/', views.AddBookView.as_view(), name='add_book'),
