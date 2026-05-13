@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import views_api   # import the API views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # API routes (must come first or at least be present)
@@ -16,4 +17,5 @@ urlpatterns = [
     path('books/<int:pk>/edit/', views.EditBookView.as_view(), name='edit_book'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('book/<int:book_id>/', views.book_detail, name='book_detail'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
 ]
