@@ -6,6 +6,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib import messages
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 
 class HomeView(TemplateView):
@@ -32,9 +36,10 @@ def book_list(request):
     books = Book.objects.all()
     return render(request, 'books.html', {'books': books})
 
-def book_detail(request, book_id):
-    book = get_object_or_404(Book, pk=book_id)
-    return render(request, 'books-details.html', {'book' : book})   
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'books-details.html'
+    context_object_name = 'book'   
 
 def signup(request):
     if request.user.is_authenticated:
@@ -74,4 +79,13 @@ def signup(request):
         login(request, user)
         return redirect('book_list')
 
-    return render(request, 'signup.html')    
+    return render(request, 'signup.html')
+  
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['borrowed_books'] = self.request.user.borrowed_books.all()  # related_name from ForeignKey
+        return context    

@@ -1,17 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My Profile - Kitab Hub</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <nav class="navbar">
     <div class="nav-right">
-        <a href="books.html" class="logo-container">
-            <img src="images/read.png" alt="library logo">
-             <span style="color: beige;" > Kitab Hub</span>
+        <a href="{% url 'book_list' %}" class="logo-container">
+            <img src="{% static 'images/read.png' %}" alt="library logo">
+            <span style="color: beige;">Kitab Hub</span>
         </a>
     </div>
     <div class="nav-search">
@@ -19,11 +20,29 @@
         <button id="searchBtn">🔍</button>
     </div>
     <div class="nav-left">
-        <a href="home.html">Home</a>
-        <a href="books.html">Books</a>
-        <span id="admin-links" style="display: none;"><a href="addbook.html">Add Book</a></span>
-        <span id="auth-links"><a href="signup.html">Sign Up</a> <a href="login.html">Login</a></span>
-        <span id="profile-links" style="display: none;"><a href="profile.html">Profile</a> <a href="#" id="logout-btn">Logout</a></span>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'book_list' %}">Books</a>
+
+        {% if user.is_staff %}
+            <span id="admin-links">
+                <a href="{% url 'add_book' %}">Add Book</a>
+            </span>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <span id="profile-links">
+                <a href="{% url 'profile' %}">Profile</a>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: white; cursor: pointer;">Logout</button>
+                </form>
+            </span>
+        {% else %}
+            <span id="auth-links">
+                <a href="{% url 'signup' %}">Sign Up</a>
+                <a href="{% url 'login' %}">Login</a>
+            </span>
+        {% endif %}
     </div>
 </nav>
 
@@ -31,137 +50,111 @@
 
     <div class="profile-card">
         <h2>My Profile</h2>
-        <div class="profile-avatar" id="avatar-initials">?</div>
-        <div id="user-info"></div>
+        <div class="profile-avatar" id="avatar-initials">
+            {{ user.username|first|upper|default:"?" }}
+        </div>
+        <div id="user-info">
+            <div class="profile-field">
+                <label>Username</label>
+                <span>{{ user.username }}</span>
+            </div>
+            <div class="profile-field">
+                <label>Email</label>
+                <span>{{ user.email }}</span>
+            </div>
+            <div class="profile-field">
+                <label>Account Type</label>
+                <span class="account-badge">
+                    {% if user.is_staff %}Administrator{% else %}Regular User{% endif %}
+                </span>
+            </div>
+        </div>
     </div>
 
     <div class="books-card">
         <h2>Books I Have Borrowed</h2>
-        <div id="borrowed-books" class="books-container"></div>
+        <div id="borrowed-books" class="books-container">
+            {% if borrowed_books %}
+                {% for book in borrowed_books %}
+                <div class="book-card" data-id="{{ book.id }}">
+                    <img src="{{ book.image.url|default:'/static/images/default-book.jpg' }}" alt="{{ book.title }}" class="book-img">
+                    <h3>{{ book.title }}</h3>
+                    <p>By {{ book.author }}</p>
+                    <p class="status status-borrowed">
+                        Borrowed on: {{ book.borrowed_date|date:"Y-m-d"|default:"unknown date" }}
+                    </p>
+                    <div class="actions">
+                        <button class="btn return-btn" data-id="{{ book.id }}">Return Book</button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📚</div>
+                    <p>You haven't borrowed any books yet.</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
 
 </div>
 
-<script src="js/books-data.js"></script>
-<script src="js/nav.js"></script>
-<script src="js/books.js"></script>
 <script>
-    (function() {
-        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        if (!currentUser) {
-            alert("Please log in to view your profile.");
-            window.location.href = "login.html";
-            return;
-        }
-
-        const avatarEl = document.getElementById("avatar-initials");
-        if (avatarEl && currentUser.username) {
-            avatarEl.textContent = currentUser.username.charAt(0).toUpperCase();
-        }
-
-        const userInfoDiv = document.getElementById("user-info");
-        userInfoDiv.innerHTML = `
-            <div class="profile-field">
-                <label>Username</label>
-                <span>${escapeHtml(currentUser.username)}</span>
-            </div>
-            <div class="profile-field">
-                <label>Email</label>
-                <span>${escapeHtml(currentUser.email)}</span>
-            </div>
-            <div class="profile-field">
-                <label>Account Type</label>
-                <span class="account-badge">${currentUser.type === 'admin' ? 'Administrator' : 'Regular User'}</span>
-            </div>
-        `;
-
-        function getBooks() {
-            return JSON.parse(localStorage.getItem("books")) || [];
-        }
-
-        function saveBooks(books) {
-            localStorage.setItem("books", JSON.stringify(books));
-        }
-
-        function renderBorrowedBooks() {
-            const allBooks = getBooks();
-            const borrowed = allBooks.filter(book =>
-                book.status && book.status.toLowerCase() === "borrowed" &&
-                book.borrowedBy === currentUser.username
-            );
-            const container = document.getElementById("borrowed-books");
-            if (!container) return;
-
-            if (borrowed.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">📚</div>
-                        <p>You haven't borrowed any books yet.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = "";
-            borrowed.forEach(book => {
-                const imageUrl = book.imageUrl || "images/default-book.jpg";
-                html += `
-                    <div class="book-card" data-id="${book.id}">
-                        <img src="${imageUrl}" alt="${book.title}" class="book-img" onerror="this.src='images/default-book.jpg'">
-                        <h3>${escapeHtml(book.title)}</h3>
-                        <p>By ${escapeHtml(book.author)}</p>
-                        <p class="status status-borrowed">Borrowed on: ${book.borrowedDate || "unknown date"}</p>
-                        <div class="actions">
-                            <button class="btn return-btn" data-id="${book.id}">Return Book</button>
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-
-            document.querySelectorAll(".return-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const bookId = parseInt(btn.dataset.id);
-                    returnBook(bookId);
-                });
-            });
-        }
-
-        function returnBook(bookId) {
-            if (confirm("Return this book? It will become available for others.")) {
-                let books = getBooks();
-                const book = books.find(b => b.id === bookId);
-                if (book && book.borrowedBy === currentUser.username) {
-                    book.status = "Available";
-                    delete book.borrowedBy;
-                    delete book.borrowedDate;
-                    saveBooks(books);
-                    alert(`"${book.title}" has been returned.`);
-                    renderBorrowedBooks();
-                } else {
-                    alert("Unable to return this book.");
+    //helper to get CSRF token 
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, 10) === 'csrftoken=') {
+                    cookieValue = decodeURIComponent(cookie.substring(10));
+                    break;
                 }
             }
         }
+        return cookieValue;
+    }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-        }
+    //return book 
+    document.querySelectorAll('.return-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const bookId = this.dataset.id;
+            if (!confirm('Return this book? It will become available for others.')) return;
 
-        renderBorrowedBooks();
+            try {
+                const response = await fetch(`/api/books/${bookId}/return/`, {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCSRFToken() },
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.message || 'Book returned successfully.');
+                    location.reload();  // refresh the page to update the list
+                } else {
+                    alert(data.error || 'Failed to return the book.');
+                }
+            } catch (err) {
+                console.error('Error returning book:', err);
+                alert('Network error. Please try again.');
+            }
+        });
+    });
 
-        const searchInput = document.getElementById("searchInput");
-        const searchBtn = document.getElementById("searchBtn");
-        if (searchBtn && searchInput) {
-            searchBtn.addEventListener("click", () => {
-                window.location.href = "books.html?search=" + encodeURIComponent(searchInput.value);
-            });
-            searchInput.addEventListener("keyup", (e) => {
-                if (e.key === "Enter") window.location.href = "books.html?search=" + encodeURIComponent(searchInput.value);
-            });
-        }
-    })();
+    //search redirect to books page with query
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', () => {
+            window.location.href = "{% url 'book_list' %}?q=" + encodeURIComponent(searchInput.value);
+        });
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                window.location.href = "{% url 'book_list' %}?q=" + encodeURIComponent(searchInput.value);
+            }
+        });
+    }
 </script>
+
 </body>
 </html>
