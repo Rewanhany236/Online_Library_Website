@@ -1,82 +1,82 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Online Library | Sign Up</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
 </head>
 
 <body>
 
 <nav class="navbar">
     <div class="nav-right">
-        <a href="books.html" class="logo-container"></a>
-    <img src="images/read.png" alt="library logo">
-    <span style="color: beige;" > Kitab Hub</span>
-</div>
+        <a href="{% url 'book_list' %}" class="logo-container">
+            <img src="{% static 'images/read.png' %}" alt="library logo">
+            <span style="color: beige;">Kitab Hub</span>
+        </a>
+    </div>
 
-<div class="nav-search">
-    <input type="text" placeholder="search for a book or author">
-    <button type="submit">🔍</button>
-</div>
+    <div class="nav-search">
+        <input type="text" placeholder="Search for a book or author">
+        <button type="submit">🔍</button>
+    </div>
 
-<div class="nav-left">
-<a href="home.html">Home</a>    
-<a href="books.html">Books</a> 
+    <div class="nav-left">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'book_list' %}">Books</a>
 
-<span id="admin-links" style="display: none;">
-    <a href="addbook.html">Add Book</a>
-    <a href="editbook.html">Edit Book</a>
+        {% if user.is_staff %}
+        <span id="admin-links">
+            <a href="{% url 'add_book' %}">Add Book</a>
+        </span>
+        {% endif %}
 
-</span>
-
-<span id="user-links" style="display: none;">
-        <a href="borrowed-books.html">Borrowed Books</a> 
-    </span>
-<a href="signup.html">Sign Up</a> 
-<a href="login.html">Login</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="#" id="logout-btn">Logout</a>
+        {% else %}
+            <a href="{% url 'signup' %}">Sign Up</a>
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
     </div>
 </nav>
-
 
 <h1 class="signup-title">Create an Account</h1>
 <p class="signup-subtitle">Please fill the form to register.</p>
 
+{% if messages %}
+    {% for message in messages %}
+        <p style="color: red; text-align: center;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
 
-<form class="signup-form" onsubmit="return validateSignup()">
+<form class="signup-form" method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
 
     <label>Username:</label>
-    <input type="text" id="username" placeholder="Enter your username" required>
+    <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
     <label>Email:</label>
-    <input type="email" id="email" placeholder="Enter your email" required>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
     <label>Password:</label>
-    <input type="password" id="password" placeholder="Enter password" required>
+    <input type="password" id="password" name="password" placeholder="Enter password" required>
 
     <label>Confirm Password:</label>
-    <input type="password" id="confirm" placeholder="Confirm password" required>
-
-    <label>User Type:</label>
-    <select id="type" required>
-        <option value="">Select</option>
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-    </select>
+    <input type="password" id="confirm" name="confirm" placeholder="Confirm password" required>
 
     <button type="submit" class="signup-btn">Register</button>
 
     <div class="signup-login-link">
         Already have an account?
-        <a href="login.html">Login</a>
+        <a href="{% url 'login' %}">Login</a>
     </div>
-
 </form>
 
-
-<script src="Js/signup.js"></script>
+<script src="{% static 'js/logout.js' %}"></script>
+<!-- <script src="{% static 'js/signup.js' %}"></script> -->
 
 </body>
-
 </html>
