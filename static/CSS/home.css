@@ -5,10 +5,10 @@
     padding: 80px 8%;
     min-height: 480px;
     overflow: hidden;
-    background-image: url('../images/books.png');
+    background-image: url('../../media/images/books.png'); 
     background-repeat: no-repeat;
-    background-position: right center;
-    background-size: 55% auto;
+    background-position: right 2% center;
+    background-size: 40% auto;
     background-blend-mode: multiply;
     background-color: var(--color-background);
 }
