@@ -36,11 +36,16 @@
             {% if user.is_authenticated %}
             <span id="profile-links">
                 <a href="{% url 'profile' %}">Profile</a>
-                <a href="#" id="logout-btn">Logout</a>
+    
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: white; cursor: pointer;">Logout</button>
+                </form>
             </span>
             {% else %}
             <span id="auth-links">
-                <a href="{% url 'singnup' %}">Login</a>
+                <!-- Fixed typo: 'singnup' → 'signup' -->
+                <a href="{% url 'signup' %}">Sign Up</a>
                 <a href="{% url 'login' %}">Login</a>
             </span>
             {% endif %}
@@ -49,11 +54,6 @@
 
     <h1><center>Available Books</center></h1>
 
-    <!--
-        Instead of building cards in JavaScript from localStorage,
-        Django renders them directly from the database via the view.
-        The view passes a "books" queryset to this template as context.
-    -->
     <div class="books-container" id="booksContainer">
         {% if books %}
             {% for book in books %}
@@ -75,21 +75,11 @@
                 </p>
 
                 <div class="actions">
-
                     {% if user.is_authenticated and not user.is_staff and book.status == 'Available' %}
-                    <!--
-                        Borrow button: only shown to logged-in regular users
-                        when the book is available.
-                        Sends a POST to the borrow API endpoint via books.js.
-                    -->
                     <button class="btn borrow-btn" data-id="{{ book.id }}">Borrow</button>
                     {% endif %}
 
                     {% if user.is_staff %}
-                    <!--
-                        Edit/Delete buttons: only shown to staff (admins).
-                        Secure — non-staff users never receive this HTML.
-                    -->
                     <div class="admin-only">
                         <a href="{% url 'edit_book' book.id %}">
                             <button class="btn edit-btn">Edit</button>
@@ -97,7 +87,6 @@
                         <button class="btn delete-btn" data-id="{{ book.id }}">Delete</button>
                     </div>
                     {% endif %}
-
                 </div>
             </div>
             {% endfor %}
@@ -111,8 +100,6 @@
             </p>
         {% endif %}
     </div>
-
-    <script src="{% static 'js/logout.js' %}"></script>
     <script src="{% static 'js/books.js' %}"></script>
 
 </body>
