@@ -1,24 +1,16 @@
 // editbook.js
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log("✅ editbook.js loaded");
+    console.log("editbook.js loaded");
     
     // Get book ID from URL
     const url = window.location.pathname;
     let bookId = null;
     
-    // Try pattern: /edit-book/4/
-    let match = url.match(/\/edit-book\/(\d+)\//);
+    let match = url.match(/\/books\/(\d+)\/edit\//);
     if (match) {
         bookId = match[1];
     }
     
-    // Try pattern: /books/4/edit/
-    if (!bookId) {
-        match = url.match(/\/books\/(\d+)\/edit\//);
-        if (match) {
-            bookId = match[1];
-        }
-    }
     
     console.log("Book ID:", bookId);
     console.log("Current URL:", url);
@@ -105,10 +97,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             const data = await response.json();
             
             if (response.ok && data.success) {
-                alert("✅ Book updated successfully!");
+                alert(" Book updated successfully!");
                 window.location.href = "/books/";
             } else {
-                alert("❌ Error: " + (data.error || "Failed to update"));
+                alert("Error: " + (data.error || "Failed to update"));
                 doneBtn.textContent = originalText;
                 doneBtn.disabled = false;
             }
